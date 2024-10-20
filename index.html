@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.I Com Sherlock Holmes</title>
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div id="inicial" class="inicial bottom">
+        <button id="btnAtivarSom"><i class="fa-solid fa-volume-xmark"></i></button>
+        <video id="video_inicial" autoplay muted loop>
+            <source src="assets/videos/sherlock edit.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos HTML5.
+        </video>
+
+        <div class="infos bottom">
+            <h1>Nunca pare de aprender</h1>
+            <p>
+                O aprendizado é o ponto de partida para o seu desenvolvimento pessoal, e avanço da humanidade.
+            </p>
+            <p>Entenda como pensar igual Sherlock Holmes pode impulsionar seu aprendizado em Tecnologia da Informação.
+            </p>
+            <button id="btn_sabermais">Saber mais</button>
+        </div>
+    </div>
+
+    <div id="secao2" class="section2 right">
+        <div class="infos">
+            <h1>"A dúvida é o início da sabedoria"</h1>
+            <p>A frase "A dúvida é o início da sabedoria" é exemplificada por personagens como Sherlock Holmes,
+                Sócrates, René Descartes, Galileu Galilei e Dr. Gregory House, que usam o questionamento e a
+                investigação para chegar à verdade. Todos eles mostram que o ato de duvidar é fundamental para o
+                progresso e o aprendizado.</p>
+            <p>Sherlock Holmes, em particular, é conhecido por sua habilidade em pensar de maneira lógica e analítica,
+                nunca aceitando respostas óbvias sem antes examinar os detalhes. Ele acredita que os fatos são
+                essenciais e que, ao eliminar o impossível, o que resta, por mais improvável que pareça, deve ser a
+                verdade. Sua mente funciona como uma máquina de dedução, sempre em busca de padrões ocultos e pistas que
+                passam despercebidas aos outros.</p>
+            <button id="btn_saberMais2">Diga-me mais</button>
+        </div>
+    </div>
+    <div id="secao3" class="section3 left">
+        <div class="infos">
+            <h1>"Elementar, meu caro leitor, mas e na área de T.I?"</h1>
+            <p>Em uma área tão grande e aparentemente desconexa, utilizar a lógica de Holmes pode ser de grande ajuda,
+                tendo em vista que, apesar de parecer não ter fim ou lógica, no fim do dia a área pode ser considerada
+                um grande quebra cabeça que segue uma lógica e certos padrões.</p>
+            <p>O modelo de pensamento lógico de <span style="font-weight: bold;">Sherlock Holmes</span> pode ser
+                aplicado ao aprendizado em TI, incentivando a curiosidade e a investigação. Além disso, o pensamento
+                crítico de Holmes ensina a questionar informações e evitar conclusões precipitadas. Essa abordagem pode
+                ser usada no estudo de novas tecnologias, promovendo uma compreensão mais profunda e estruturada,
+                essencial para o desenvolvimento na área de TI.</p>
+            <button id="btn_saberMais3">E agora?</button>
+        </div>
+    </div>
+    <div id="secao4" class="section4 right">
+        <div class="infos">
+            <div class="frase">
+                <h1>"Você vê, mas não observa."</h1>
+                <p>Sherlock Holmes</p>
+            </div>
+            <p>Em uma área tão grande e aparentemente desconexa, utilizar a lógica de Holmes pode ser de grande ajuda,
+                tendo em vista que, apesar de parecer não ter fim ou lógica, no fim do dia a área pode ser considerada
+                um grande quebra cabeça que segue uma lógica e certos padrões.</p>
+            <p>O modelo de pensamento lógico de <span style="font-weight: bold;">Sherlock Holmes</span> pode ser
+                aplicado ao aprendizado em TI, incentivando a curiosidade e a investigação. Além disso, o pensamento
+                crítico de Holmes ensina a questionar informações e evitar conclusões precipitadas. Essa abordagem pode
+                ser usada no estudo de novas tecnologias, promovendo uma compreensão mais profunda e estruturada,
+                essencial para o desenvolvimento na área de TI.</p>
+            <button id="btn_saberMais4">Por fim...</button>
+        </div>
+    </div>
+    <div id="secao5" class="section5 left">
+        <div class="infos">
+            <h1>Gostou da proposta?</h1>
+            <p>Considere se cadastrar no blog e tenha acesso à diversas postagens acerca da filosofia e método de
+                pensamento de Sherlock Holmes aplicado à área da tecnologia da informação e torne-se um verdadeiro
+                programador solucionador de problemas.</p>
+            <button id="btn_cadastro">QUERO FAZER PARTE</button>
+        </div>
+    </div>
+    <footer>
+        <p>T.I com Sherlock Holmes - Copyright 2024</p>
+    </footer>
+</body>
+
+</html>
+<script>
+    var botao_ativar_som = document.getElementById('btnAtivarSom');
+
+    botao_ativar_som.addEventListener('click', () => {
+        var video_inicial = document.getElementById('video_inicial');
+        botao_ativar_som.innerHTML = (botao_ativar_som.innerHTML == `<i class="fa-solid fa-volume-xmark"></i>`) ? `<i class="fa-solid fa-volume-high"></i>` : `<i class="fa-solid fa-volume-xmark"></i>`;
+        //botao_ativar_som.innerHTML = `<i class="fa-solid fa-volume-high"></i>`;
+        video_inicial.muted = !video_inicial.muted;
+
+    })
+
+        // criação da função que será executado ao elemento observado ser detectado
+        const callback = (entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+
+            if (entry.target.id == "inicial") {
+                setTimeout(() => {
+                    const infos = entry.target.querySelector('.infos');
+                    infos.classList.add('show-infos');
+                    entry.target.classList.add("show");
+                    entry.target.classList.remove("bottom");
+                }, 900); 
+            }
+           console.log(entry.target)
+           entry.target.classList.remove("hidden");
+           entry.target.classList.add("show");
+
+
+
+        }
+    });
+};
+
+
+    // Configuração do observer
+    const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+    };
+
+        // criação do observer a partir da observação
+        const observer = new IntersectionObserver(callback, options);
+
+
+    const inicial = document.getElementById("inicial");
+    console.log(inicial)
+    const secao2 = document.getElementById("secao2");
+    const secao3 = document.getElementById("secao3");
+    const secao4 = document.getElementById("secao4");
+    const secao5 = document.getElementById("secao5");
+
+    const secoes = [secao2, secao3, secao4, secao5, inicial];
+
+    secoes.forEach(element => {
+        observer.observe(element);
+    });
+
+
+    // direcionamento botões
+    var botao_saber_mais = document.getElementById("btn_sabermais");
+    var botao_saber_mais_secao2 = document.getElementById("btn_saberMais2")
+    var botao_saber_mais_secao3 = document.getElementById("btn_saberMais3")
+    var botao_saber_mais_secao4 = document.getElementById("btn_saberMais4")
+    var botao_cadastro = document.getElementById("btn_cadastro")
+
+    botao_saber_mais.addEventListener("click", () => {
+        document.querySelector("#secao2").scrollIntoView({
+        behavior: 'smooth'
+    });
+    })
+    botao_saber_mais_secao2.addEventListener("click", () => {
+        document.querySelector("#secao3").scrollIntoView({
+        behavior: 'smooth'
+    });
+    })
+    botao_saber_mais_secao3.addEventListener("click", () => {
+        document.querySelector("#secao4").scrollIntoView({
+        behavior: 'smooth'
+    });
+    })
+    botao_saber_mais_secao4.addEventListener("click", () => {
+        document.querySelector("#secao5").scrollIntoView({
+        behavior: 'smooth'
+    });
+    })
+    botao_cadastro.addEventListener("click", () => {
+        window.location.href = "cadastro.html"
+    })
+
+
+
+
+
+    
+
+</script>

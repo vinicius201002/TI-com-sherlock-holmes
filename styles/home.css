@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: "Inter", sans-serif;
+}
+
+button {
+    transition: 1s;
+    cursor: pointer;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #0051FF;
+    transform: translateY(-10%);
+}
+
+
+/* Configuração de classes para o Intersection Observer */
+.right {
+    transform: translateX(50%); 
+
+}
+
+.left {
+    transform: translateX(-50%);
+}
+
+.show {
+    transition: 1s;
+    transform: translateX(0);
+    opacity: 100;
+}
+
+.bottom {
+   opacity: 0;
+
+}
+
+.show-infos {
+    opacity: 100%;
+
+
+}
+
+
+
+.inicial {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    transition: 0.5s;
+}
+
+#btnAtivarSom{
+    width: 20vw;
+    height: auto;
+    position: absolute;
+    font-size: 4rem;
+    background-color: transparent;
+    border: none;
+}
+
+#btnAtivarSom i {
+    overflow: hidden;
+
+}
+
+.inicial video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.inicial .infos {
+    display: flex;
+    width: fit-content;
+    position: relative;
+    left: 24%;
+    top: 50%;
+    flex-flow: column nowrap;
+    align-items: start;
+    gap: 1.5rem;
+
+    transition: 2s ease-in-out;
+}
+
+.inicial .infos h1 {
+    color: white;
+    font-size: 4rem;
+}
+
+.inicial .infos p {
+    width: 80%;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.inicial .infos button {
+    width: 26%;
+    height: 3rem;
+    background-color: #0051FF;
+    color: white;
+    border: none;
+    align-self: start;
+    border-radius: 1rem;
+    margin-left: 14rem;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: 1s;
+}
+
+.inicial .infos button:hover {
+   
+}
+
+
+
+.section2 {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../assets/img/wallpaper_section_2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    transition: 1s;
+}
+
+.section2 .infos {
+    display: flex;
+    gap: 2rem;
+    width: 65%;
+    margin-left: 5rem;
+    flex-flow: column nowrap;
+}
+
+.section2 .infos button {
+    width: 26%;
+    height: 3rem;
+    background-color: #0051FF;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.section3 {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../assets/img/wallpaper_section_3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 4rem;
+}
+
+.section3 .infos {
+    display: flex;
+    gap: 2rem;
+    width: 65%;
+    margin-left: 5rem;
+    flex-flow: column nowrap;
+}
+
+.section3 .infos button {
+    width: 26%;
+    height: 3rem;
+    background-color: #0051FF;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.section4 {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../assets/img/wallpaper_section_4.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.section4 .frase {
+    width: 55%;
+}
+
+.frase p {
+    text-align: end;
+}
+
+.section4 .infos {
+    display: flex;
+    gap: 2rem;
+    width: 53%;
+    margin-left: 5rem;
+    flex-flow: column nowrap;
+}
+
+.section4 .infos button {
+    width: 26%;
+    height: 3rem;
+    background-color: #0051FF;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.section5 {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../assets/img/wallpaper_section_5.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 4rem;
+}
+
+.section5 .infos h1 {
+    font-size: 3rem;
+}
+
+.section5 .infos {
+    display: flex;
+    gap: 2rem;
+    width: 48%;
+    margin-left: 5rem;
+    flex-flow: column nowrap;
+}
+
+.section5 .infos p {
+    font-size: 1rem;
+    width: 90%;
+}
+
+.section5 .infos button {
+    width: 50%;
+    height: 3rem;
+    background-color: #0051FF;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+footer {
+    width: 100vw;
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0051FF;
+    color: white;
+}
