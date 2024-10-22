@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: "Inter", sans-serif;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-image: url('../assets/img/wallpaper_cadastro.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    ;
+}
+
+.box-cadastro {
+    background-color: white;
+    width: 90%;
+    height: 90%;
+
+    display: flex;
+}
+
+.box-cadastro .form {
+    /* dimensões */
+    width: 50%;
+
+    /* display */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    /* Espaçamento */
+    padding: 4rem;
+}
+
+.form .campo {
+    color: #808080;
+    height: fit-content;
+}
+
+.form h1 {
+    font-size: 1.5rem;
+    align-self: center;
+}
+
+.campo .senha {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form .campo input {
+    width: 99%;
+    height: 50px;
+    border: 1px solid #D9D9D9;
+    border-radius: 8px;
+    font-size: 1.5rem;
+}
+
+.form button {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 100%;
+    background-color: #0051FF;
+    border: none;
+    border-radius: 12px;
+    align-self: center;
+    height: 7%;
+}
+
+.box-cadastro .imagem {
+    width: 70%;
+    background-image: url('../assets/img/imagem_cadastro_2.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}

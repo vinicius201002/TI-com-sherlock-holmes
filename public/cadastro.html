@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="styles/cadastro.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="box-cadastro">
+            <div class="form">
+                <h1>Cadastre-se</h1>
+                <div class="campo">
+                    <p>Nome</p>
+                    <input type="text" id="ipt_nome">
+                </div>
+                <div class="campo">
+                    <p>E-mail</p>
+                    <input type="text" id="ipt_email">
+                </div>
+                <div class="campo">
+                    <p>Data de nascimento</p>
+                    <input type="date" id="ipt_dt_nasc">
+                </div>
+                <div class="campo">
+                    <div class="senha">
+                        <p>Senha</p>
+                        <p>Mostrar</p>
+                    </div>
+                    <input type="password" id="ipt_senha">
+                </div>
+                <div class="campo">
+                    <div class="senha">
+                        <p>Confirme a senha</p>
+                        <p>Mostrar</p>
+                    </div>
+                    <input type="password" id="ipt_confirmar_senha">
+                </div>
+                <button onclick="cadastrar()">Cadastrar</button>
+                <p>Já possui conta? <a href="login.html">Logar-se</a></p>
+            </div>
+            <div class="imagem"></div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+   function cadastrar() {
+    var nome = ipt_nome.value;
+    var email = ipt_email.value;
+    var senha = ipt_senha.value;
+    var dt_nasc = ipt_dt_nasc.value;
+
+        if (email != "" && senha != "" && nome != "" && dt_nasc != "") {
+
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nomeServer: nome,
+                emailServer: email,
+                senhaServer: senha,
+                dtNascServer: dt_nasc
+            })
+            }).then(function (resposta) {
+               if (resposta.status == 400) {
+                alert("E-mail já em uso, tente novamente.")
+               } else if (resposta.status == 200) {
+                alert("Cadastro feito com sucesso.");
+                window.location.href = "login.html";
+               }
+            }).catch(function (erro) {
+               console.log(erro);
+            })
+
+        } else {
+            alert("Preencha todos os campos")
+        }
+
+   }
+</script>

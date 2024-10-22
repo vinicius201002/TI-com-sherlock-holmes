@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="box-login">
+            <div class="form">
+                <h1>Bem vindo de volta à Baker Street</h1>
+                <div class="campo">
+                    <p>Insira seu e-mail</p>
+                    <input type="text" id="ipt_email">
+                </div>
+                <div class="campo">
+                    <div class="senha">
+                        <p>Senha</p>
+                        <p>Mostrar</p>
+                    </div>
+                    <input type="password" id="ipt_senha">
+                </div>
+                <button onclick="logar()">Login</button>
+                <div class="permanecer-conectado">
+                    <input type="checkbox">
+                    <p>Permanecer conectado</p>
+                </div>
+                <p>Não possui conta? <a href="cadastro.html">Cadastrar-se</a></p>
+            </div>
+            <div class="imagem"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function logar() {
+        var email = ipt_email.value;
+        var senha = ipt_senha.value;
+
+        if (email != "" && senha != "") {
+
+            fetch("/usuarios/autenticar", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: email,
+                senhaServer: senha
+            })
+            }).then(function (resposta) {
+                if (resposta.status == 200) {
+                    alert("Logado com sucesso")
+                } else {
+                    alert("Erro no login")
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            })
+
+        } else {
+            alert("Preencha todos os campos")
+        }
+
+    }
+</script>
