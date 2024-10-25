@@ -23,7 +23,6 @@
     background-color: white;
     width: 90%;
     height: 90%;
-
     display: flex;
 }
 
@@ -37,7 +36,7 @@
     justify-content: space-evenly;
 
     /* Espaçamento */
-    padding: 4rem;
+    padding: 2rem 4rem 2rem 4rem;
 }
 
 .form .campo {
@@ -82,4 +81,8 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
+
+.logar {
+    text-decoration: none;
 }
