@@ -55,6 +55,8 @@
     var senha = ipt_senha.value;
     var dt_nasc = ipt_dt_nasc.value;
 
+
+
         if (email != "" && senha != "" && nome != "" && dt_nasc != "") {
 
             fetch("/usuarios/cadastrar", {
@@ -82,6 +84,5 @@
         } else {
             alert("Preencha todos os campos")
         }
-
    }
 </script>

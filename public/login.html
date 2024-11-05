@@ -35,7 +35,7 @@
 </body>
 </html>
 <script>
-    function logar() {
+    function logar() {;
         var email = ipt_email.value;
         var senha = ipt_senha.value;
 
@@ -51,6 +51,7 @@
                 senhaServer: senha
             })
             }).then(function (resposta) {
+                console.log(resposta)
                 if (resposta.status == 200) {
                     alert("Logado com sucesso")
                 } else {
@@ -64,6 +65,5 @@
         } else {
             alert("Preencha todos os campos")
         }
-
-    }
+    } 
 </script>

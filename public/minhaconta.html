@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha conta</title>
+    <link rel="stylesheet" href="styles/minhaconta.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav class="navbar">
+        <img src="" alt="logo">
+        <div class="buscar">
+            <input placeholder="Pesquisar" type="text">
+            <button>
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+        <ul class="opcoes">
+            <li><a href="artigos.html">Artigos</a></li>
+            <li><a href="minhaconta.html">Minha conta</a></li>
+            <li><a href="sair()">Sair</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="infos">
+            <img src="assets/img/user.png">
+
+            <div class="infos">
+                <p class="nome">Vinicius Oliveira</p>
+            <p>Cadastrado em: 20/10/2024</p>
+            <p>Quantidade de acessos: 222</p>
+            <p>Último acesso: 21/10/2024</p>
+            <a href="postagens_curtidas.html">Ver postagens curtidas</a>
+        </div>
+        </div>
+        <div class="form">
+            <div class="campo">
+                <p>Nome</p>
+                <input type="text" id="ipt_nome">
+            </div>
+            <div class="campo">
+                <p>E-mail</p>
+                <input type="text" id="ipt_email">
+            </div>
+            <div class="campo">
+                <p>Data de nascimento</p>
+                <input type="text" id="ipt_dtNasc">
+            </div>
+            <div class="campo">
+                <p>Senha</p>
+                <input type="password" id="ipt_senha">
+            </div>
+            <button>Editar</button>
+        </div>
+    </div>
+    
+</body>
+</html>
