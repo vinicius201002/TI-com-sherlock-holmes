@@ -63,3 +63,59 @@ a {
     font-weight: bold;
     color: white;
 }
+
+main {
+    padding: 3rem 3rem 0rem 3rem;
+    width:  95vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    flex-basis: 25%;
+    height: 62vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+.card .imagem { 
+    height: 50%;
+   
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
+#artigo-1 {
+    background-image: url('../assets/img/linux.png');
+}
+
+#artigo-2 {
+    background-image: url('../assets/img/compiladores.jpg');
+}
+
+#artigo-3 {
+    background-image: url('../assets/img/frameworks.jpg');
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50%;
+    font-size: 1rem;
+}
+
+.titulo-postagem {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
