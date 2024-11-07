@@ -1,0 +1,118 @@
+* {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        font-family: "Inter", sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.navbar {
+    width: 100vw;
+    height: 15vh;
+    background-color: #0051FF;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.buscar {
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    height: 50%;
+}
+
+.buscar input {
+    width: 40%;
+    border: none;
+    border-radius: 8px 0px 0px 8px;
+    background-color: white;
+    padding: 1rem;
+}
+
+.buscar input:focus {
+}
+
+.buscar input::placeholder {
+   padding: 1rem;
+    /* text-align: center; */
+}
+
+
+.buscar button {
+    background-color: white;
+    width: 5%;
+    border: none;
+    border-radius:0px 8px 8px 0px;
+}
+
+.buscar button:hover {
+    cursor: pointer;
+}
+
+.opcoes {
+    display: flex;
+    gap: 4rem;
+}
+
+.opcoes a {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.container {
+    padding: 3rem;
+    height: 150vh;
+
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    column-gap: 3rem;
+}
+
+.coluna1{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: 150vh;
+}
+
+.coluna1 > h1 {
+    font-size: 3rem;
+}
+
+.coluna1 > .imagem {
+    background-image: url('../../assets/img/linux.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 30%;
+}
+
+.coluna1 > .info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.coluna2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.box {
+    flex-basis: 25%;
+    background-color: #D9D9D9;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+}
