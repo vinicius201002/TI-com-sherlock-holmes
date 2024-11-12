@@ -18,13 +18,13 @@
                 <div class="campo">
                     <div class="senha">
                         <p>Senha</p>
-                        <p>Mostrar</p>
+                        <p id="mostrarSenha">Mostrar</p>
                     </div>
                     <input type="password" id="ipt_senha">
                 </div>
                 <button onclick="logar()">Login</button>
                 <div class="permanecer-conectado">
-                    <input type="checkbox">
+                    <input id="chkbox_permanecer" type="checkbox">
                     <p>Permanecer conectado</p>
                 </div>
                 <p>Não possui conta? <a class="cadastrar" href="cadastro.html">Cadastrar-se</a></p>
@@ -38,9 +38,9 @@
     function logar() {;
         var email = ipt_email.value;
         var senha = ipt_senha.value;
+        var permanecerLogado = chkbox_permanecer.checked;
 
         if (email != "" && senha != "") {
-
             fetch("/usuarios/autenticar", {
                 method: "POST",
                 headers: {
@@ -53,7 +53,16 @@
             }).then(function (resposta) {
                 console.log(resposta)
                 if (resposta.status == 200) {
-                    alert("Logado com sucesso")
+                    alert("Logado com sucesso");
+                    // fazendo operações com o resultado do login
+                    resposta.json().then( (dados) => {
+                        var dadosUsuario = dados[0];
+                        if (permanecerLogado) {
+                            sessionStorage.setItem("id_usuario", dadosUsuario.idUsuario);
+                        }
+                    }).catch((erro) => {
+                        console.log("Erro ao recuperar JSON da resposta: ", erro)
+                    })
                 } else {
                     alert("Erro no login")
                 }
@@ -66,4 +75,16 @@
             alert("Preencha todos os campos")
         }
     } 
+
+    var p_mostrar_senha = document.getElementById("mostrarSenha");
+    var input_senha = document.getElementById("ipt_senha");
+    p_mostrar_senha.addEventListener("click", () => {
+        mostrarSenha();
+    })
+
+    function mostrarSenha() {
+        p_mostrar_senha.innerHTML = (p_mostrar_senha.innerHTML == "Mostrar" ? "Esconder":"Mostrar");
+        input_senha.type = (p_mostrar_senha.innerHTML == "Mostrar" ? "password":"text");
+        
+    }
 </script>
