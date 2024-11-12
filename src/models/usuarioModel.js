@@ -30,8 +30,16 @@ async function verificarCadastroExistente(email) {
     return resultado.length;
 }
 
+function listarTodos() {
+    var instrucaoSql = `SELECT * FROM usuario`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    var resultado = database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
-    verificarCadastroExistente
+    verificarCadastroExistente,
+    listarTodos
 };

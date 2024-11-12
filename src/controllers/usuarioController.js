@@ -76,7 +76,22 @@ async function cadastrar(req, res) {
     }
 }
 
+function listarUsuarios(req, res) {
+    usuarioModel.listarTodos()
+    .then(resposta => {
+        if (resposta.length == 0 ) {
+            res.status(204).json(resposta);
+        } else {
+            res.status(200).json(resposta);
+        }
+    })
+    .catch(erro => {
+        res.status(500).json(erro.sqlMessage);
+    })
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    listarUsuarios
 }
