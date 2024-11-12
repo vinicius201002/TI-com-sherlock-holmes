@@ -57,9 +57,13 @@
                     // fazendo operações com o resultado do login
                     resposta.json().then( (dados) => {
                         var dadosUsuario = dados[0];
+                        var idUsuario = dadosUsuario.idUsuario;
                         if (permanecerLogado) {
-                            sessionStorage.setItem("id_usuario", dadosUsuario.idUsuario);
+                            sessionStorage.setItem("id_usuario", idUsuario);
                         }
+                        // cadastrando acesso
+                        cadastrarAcesso(dadosUsuario.idUsuario);
+                        
                     }).catch((erro) => {
                         console.log("Erro ao recuperar JSON da resposta: ", erro)
                     })
@@ -86,5 +90,28 @@
         p_mostrar_senha.innerHTML = (p_mostrar_senha.innerHTML == "Mostrar" ? "Esconder":"Mostrar");
         input_senha.type = (p_mostrar_senha.innerHTML == "Mostrar" ? "password":"text");
         
+    }
+
+    function cadastrarAcesso(idUsuario) {
+        fetch("/acessos/cadastrar", {
+            method: "POST",
+            headers: {
+                 "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idUsuarioServer: idUsuario
+            })
+        })
+        .then((resposta) => {
+            if (resposta.status == 200) {
+                // sucesso no cadastro do acesso
+                window.location = "home.html";
+            } else {
+                console.log("Erro no cadastro do acesso: ", resposta)
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+        })
     }
 </script>
