@@ -44,6 +44,14 @@ async function cadastrar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
     var dtNasc = req.body.dtNascServer;
+    var adm = req.body.isADMServer;
+
+    // Convertendo escolha de ADM
+    if (adm) {
+        adm = 1;
+    } else {
+        adm = 0;
+    }
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -59,7 +67,7 @@ async function cadastrar(req, res) {
         // verificando se o e-mail já existe
         if (await usuarioModel.verificarCadastroExistente(email) == 0) {
 
-           await usuarioModel.cadastrar(nome, email, senha, dtNasc)
+           await usuarioModel.cadastrar(nome, email, senha, dtNasc, adm)
            .then(resposta => {
             console.log(resposta)
             res.status(200).send()
@@ -68,7 +76,7 @@ async function cadastrar(req, res) {
             console.log(error)
            })
         } else {
-            res.status(400).send();
+            res.status(400).send("Email já existente");
         }
       
 
@@ -90,8 +98,25 @@ function listarUsuarios(req, res) {
     })
 }
 
+function excluirUsuario(req, res) {
+    var id = req.params.id;
+    usuarioModel.excluirUsuario(id)
+    .then(resposta => {
+        if (resposta.length == 0 ) {
+            res.status(204).json(resposta);
+        } else {
+            res.status(200).json(resposta);
+        }
+    })
+    .catch(erro => {
+        res.status(500).json(erro.sqlMessage);
+    })
+
+}
+
 module.exports = {
     autenticar,
     cadastrar,
-    listarUsuarios
+    listarUsuarios,
+    excluirUsuario
 }

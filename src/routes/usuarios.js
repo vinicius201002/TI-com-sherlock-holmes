@@ -16,4 +16,8 @@ router.get("/", function (req, res) {
     usuarioController.listarUsuarios(req, res);
 });
 
+router.delete("/excluir/:id", function (req, res) {
+    usuarioController.excluirUsuario(req, res);
+})
+
 module.exports = router;

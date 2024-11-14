@@ -9,10 +9,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
-    <div class="barra_lateral">
+    <!-- Modal criação de usuário -->
+     <div id="modal-container-criacao-usuario" class="modal-container">
+        <div class="modal">
+            <div class="cabecalho-modal">
+                <i onclick="fecharModalCriacaoUsuario()" class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="cabecalho-modal">
+                <p>Cadastrar usuário</p>
+            </div>
+            <div class="campo">
+                <p>Nome</p>
+                <input type="text" id="ipt_nome">
+            </div>
+            <div class="campo">
+                <p>E-mail</p>
+                <input type="text" id="ipt_email">
+            </div>
+            <div class="campo">
+                <p>Senha</p>
+                <input type="text" id="ipt_senha">
+            </div>
+            <div class="campo">
+                <p>Data de nascimento</p>
+                <input type="date" id="ipt_dtNasc">
+            </div>
+            <div class="campo">
+                <p>Administrador</p>
+                <input type="checkbox" id="ipt_adm">
+            </div>
+            <div class="erro">
+                <p id="erro"></p>
+            </div>
+            <button onclick="criarUsuario()">Cadastrar</button>
+            </div>
+     </div>
+    
+    
+    
+     <div class="barra_lateral">
         <div class="option">
             <i class="fa-solid fa-chart-simple"></i>
             <p>Dashboard</p>
@@ -38,7 +79,7 @@
                     <input type="text" id="ipt_buscar">
                     <button>Buscar</button>
                 </div>
-                <button>Novo usuário</button>
+                <button onclick="exibirModalCriacaoUsuario()">Novo usuário</button>
             </div>
             <table style="width: 100%;" class="tabela">
                 <!-- Header da tabela -->
@@ -74,9 +115,9 @@
                             <td>${dados[i].id}</td>
                             <td>${dados[i].nome}</td>
                             <td>${dados[i].email}</td>
-                            <td>${dados[i].senha}</td>
+                            <td>*****</td>
                             <td><i class="fa-solid fa-pencil"></i></td>
-                            <td><i class="fa-solid fa-trash"></i></td>
+                            <td><i onclick=deletarUsuario(${dados[i].id}) class="fa-solid fa-trash"></i></td>
                             `;
                         }
                     })
@@ -88,5 +129,74 @@
                 console.error(erro);
             })
     });
+
+
+    function exibirModalCriacaoUsuario() {
+        const div_modal = document.getElementById("modal-container-criacao-usuario");
+        div_modal.style.display = "flex";
+
+    }
+
+ 
+
+    function fecharModalCriacaoUsuario() {
+        const div_modal = document.getElementById("modal-container-criacao-usuario");
+        div_modal.style.display = "none";
+    }
+
+
+   
+
+    function deletarUsuario(id) {
+        fetch(`/usuarios/excluir/${id}`, {
+            method: "DELETE"
+        })
+        .then((resposta) => {
+            if (resposta.status == 200) {
+                alert("Exclusão feita com sucesso.");
+                window.location.reload();
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+        })
+
+    }
+
+    function criarUsuario() {
+        var nome = ipt_nome.value;
+        var email = ipt_email.value;
+        var senha = ipt_senha.value;
+        var dtNasc = ipt_dtNasc.value;
+        var chkBoxAdm = ipt_adm.checked;
+        if (nome == "" || email == "" || senha == "" || dtNasc == "") {
+            erro.style.display = "block";
+            erro.innerHTML = "Preencha todos os campos antes de continuar!";
+        } else {
+           // fetch para criação de usuário
+           fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nomeServer: nome,
+                emailServer: email,
+                senhaServer: senha,
+                dtNascServer: dtNasc,
+                isADMServer: chkBoxAdm
+            })
+            }).then(function (resposta) {
+               if (resposta.status == 400) {
+                alert("E-mail já em uso, tente novamente.")
+               } else if (resposta.status == 200) {
+                alert("Cadastro feito com sucesso.");
+                window.location.reload();
+               }
+            }).catch(function (erro) {
+               console.log(erro);
+            })
+        }
+    }
 
 </script>
