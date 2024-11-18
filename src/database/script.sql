@@ -27,6 +27,7 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 titulo VARCHAR(50),
 corpo TEXT,
 imagem TEXT,
+dtCriacao DATETIME DEFAULT current_timestamp,
 fkUsuario INT,
 CONSTRAINT fkCriadorPostagem FOREIGN KEY (fkUsuario) REFERENCES Usuario (id)
 ON DELETE CASCADE

@@ -56,6 +56,10 @@
                         // cadastrando acesso
                         cadastrarAcesso(dadosUsuario.idUsuario);
                         sessionStorage.setItem("id_usuario", idUsuario);
+                        // Definindo controle de adm
+                        if (dadosUsuario.admin.data[0] == 1) {
+                            sessionStorage.setItem("adm", true);
+                        }
                         window.location.href = "home.html"
                         
                     }).catch((erro) => {

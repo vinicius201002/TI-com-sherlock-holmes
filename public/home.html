@@ -9,7 +9,7 @@
     <script src="scripts/sessao.js"></script>
 </head>
 <body>
-    <nav class="navbar">
+    <nav  class="navbar">
         <img src="" alt="logo">
         <div class="buscar">
             <input placeholder="Pesquisar" type="text">
@@ -17,7 +17,7 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
         </div>
-        <ul class="opcoes">
+        <ul id="opcoes" class="opcoes">
             <li><a href="artigos.html">Artigos</a></li>
             <li><a href="minhaconta.html">Minha conta</a></li>
             <li><a href="sair()">Sair</a></li>
@@ -63,6 +63,7 @@
 </body>
 </html>
 <script>
+    carregarArtigos()
     function carregarArtigos() {
         fetch("/postagens/listar", {
             method: "GET"
@@ -74,16 +75,18 @@
                 for (var i = 0; i < resposta.length; i++) {
                     mensagem += `
                      <div class="card">
-                <div style="background-image: url ('${resposta[i].linkImagem}')" class="imagem"></div>
+                <div style="background-image: url('${resposta[i].imagem}')" class="imagem"></div>
                 <div class="infos">
                     <p class="titulo-postagem">${resposta[i].titulo}</p>
-                    <p class="descricao-postagem">Em 2024, torna-se necessário para todo profissional de T.I dominar e entender o Linux, kernel mundialmen...</p>
+                    <p class="descricao-postagem">${gerarDescricaoMenor(resposta[i].corpo)}</p>
                     <p class="data-postagem">20/10/2024 - Por Vinicius Oliveira</p>
                 </div>
                
             </div>
                     `;
                 }
+
+                cards.innerHTML = mensagem;
             })
             .catch((erro) => {
                 console.log(erro);
@@ -92,5 +95,9 @@
         .catch((erro) => {
             console.log(erro);
         })
+    }
+
+    function gerarDescricaoMenor(corpo) {
+        return corpo.substr(0, 100) + "...";
     }
 </script>
