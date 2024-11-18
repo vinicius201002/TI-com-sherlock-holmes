@@ -12,12 +12,13 @@
         <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
+        <script src="scripts/sessao.js"></script>
 </head>
 
 <body>
     <!-- Modal criação de usuário -->
      <div id="modal-container-criacao-usuario" class="modal-container">
-        <div class="modal">
+        <div id="modalCriarUsuario" class="modal">
             <div class="cabecalho-modal">
                 <i onclick="fecharModalCriacaoUsuario()" class="fa-solid fa-xmark"></i>
             </div>
@@ -49,6 +50,38 @@
             </div>
             <button onclick="criarUsuario()">Cadastrar</button>
             </div>
+            <div id="modalEditarUsuario" class="modal">
+                <div class="cabecalho-modal">
+                    <i onclick="fecharModalCriacaoUsuario()" class="fa-solid fa-xmark"></i>
+                </div>
+                <div class="cabecalho-modal">
+                    <p>Editar usuário</p>
+                </div>
+                <div class="campo">
+                    <p>Nome</p>
+                    <input type="text" id="ipt_nome_edicao">
+                </div>
+                <div class="campo">
+                    <p>E-mail</p>
+                    <input type="text" id="ipt_email_edicao">
+                </div>
+                <div class="campo">
+                    <p>Senha</p>
+                    <input type="text" id="ipt_senha_edicao">
+                </div>
+                <div class="campo">
+                    <p>Data de nascimento</p>
+                    <input type="date" id="ipt_dtNasc_edicao">
+                </div>
+                <div class="campo">
+                    <p>Administrador</p>
+                    <input type="checkbox" id="ipt_adm_edicao">
+                </div>
+                <div class="erro">
+                    <p id="erro_edicao"></p>
+                </div>
+                <button onclick="editarUsuario()">Editar</button>
+                </div>
      </div>
     
     
@@ -101,6 +134,8 @@
 
 </html>
 <script>
+    // id do usuário a ser editado
+    var idUsuario = 0;
     // fetch de usuários quando carregar a página
     window.addEventListener("load", (event) => {
         fetch("/usuarios/", {
@@ -116,7 +151,7 @@
                             <td>${dados[i].nome}</td>
                             <td>${dados[i].email}</td>
                             <td>*****</td>
-                            <td><i class="fa-solid fa-pencil"></i></td>
+                            <td><i class="fa-solid fa-pencil" onclick=exibirModalEditarUsuario(${JSON.stringify(dados[i])})></i></td>
                             <td><i onclick=deletarUsuario(${dados[i].id}) class="fa-solid fa-trash"></i></td>
                             `;
                         }
@@ -133,7 +168,32 @@
 
     function exibirModalCriacaoUsuario() {
         const div_modal = document.getElementById("modal-container-criacao-usuario");
+        // modal de criação
+        const div_modal_criarUsuario = document.getElementById("modalCriarUsuario");
+        div_modal_criarUsuario.style.display = "flex";
+        // Modal de edição
+        const div_modal_editarUsuario = document.getElementById("modalEditarUsuario");
+        div_modal_editarUsuario.style.display = "none";
+
+
         div_modal.style.display = "flex";
+
+    }
+
+    function exibirModalEditarUsuario(dadosUsuario) {
+        const div_modal = document.getElementById("modal-container-criacao-usuario");
+        // modal de criação
+        const div_modal_criarUsuario = document.getElementById("modalCriarUsuario");
+        div_modal_criarUsuario.style.display = "none";
+        // Modal de edição
+        const div_modal_editarUsuario = document.getElementById("modalEditarUsuario");
+        div_modal_editarUsuario.style.display = "flex";
+
+
+        div_modal.style.display = "flex";
+
+        idUsuario = dadosUsuario.id;
+        plotarDados(dadosUsuario);
 
     }
 
@@ -141,6 +201,8 @@
 
     function fecharModalCriacaoUsuario() {
         const div_modal = document.getElementById("modal-container-criacao-usuario");
+        const div_modal_criarUsuario = document.getElementById("modalCriarUsuario");
+        div_modal.style.display = "none";
         div_modal.style.display = "none";
     }
 
@@ -197,6 +259,64 @@
                console.log(erro);
             })
         }
+    }
+
+    function plotarDados(dadosUsuario) {
+        // console.log(dadosUsuario.admin.data[0])
+        ipt_nome_edicao.value = dadosUsuario.nome;
+        ipt_email_edicao.value = dadosUsuario.email;
+        ipt_senha_edicao.value = dadosUsuario.senha;
+        const dataFormatada = dadosUsuario.dtNasc.split("T")[0];
+        ipt_dtNasc_edicao.value = dataFormatada;
+        // console.log(dadosUsuario.dtNasc)
+        if (dadosUsuario.admin.data[0] == 0) {
+            ipt_adm_edicao.checked = false;
+        } else {
+            ipt_adm_edicao.checked = true;
+        }
+
+             
+
+    }
+
+   function editarUsuario() {
+       var nome = ipt_nome_edicao.value;
+        var email = ipt_email_edicao.value;
+        var senha = ipt_senha_edicao.value;
+        var dtNasc = ipt_dtNasc_edicao.value;
+        var chkBoxAdm = ipt_adm_edicao.checked;
+        if (nome == "" || email == "" || senha == "" || dtNasc == "") {
+            erro_edicao.style.display = "block";
+            erro_edicao.innerHTML = "Preencha todos os campos antes de continuar!";
+        } else {
+           // fetch para criação de usuário
+           fetch("/usuarios/editar", {
+                method: "PUT",
+                headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idServer: idUsuario,
+                nomeServer: nome,
+                emailServer: email,
+                senhaServer: senha,
+                dtNascServer: dtNasc,
+                isADMServer: chkBoxAdm
+            })
+            }).then(function (resposta) {
+                 if (resposta.status == 200) {
+                console.log("oi")
+                alert("Dados alterados com sucesso.");
+                idUsuario = 0;
+                window.location.reload();
+               } else {
+                console.log(resposta)
+               }
+            }).catch(function (erro) {
+               console.log(erro);
+            })
+        }
+
     }
 
 </script>

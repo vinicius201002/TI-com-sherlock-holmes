@@ -22,6 +22,15 @@ function cadastrar(nome, email, senha, dtNasc, adm) {
     return database.executar(instrucaoSql);
 }
 
+function editar(id, nome, email, senha, dtNasc, adm) {
+       // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+    //  e na ordem de inserção dos dados.
+    var instrucaoSql = `
+    UPDATE usuario SET nome = '${nome}', email = '${email}', senha = '${senha}', dtNasc = '${dtNasc}', admin = ${adm} WHERE id = ${id};`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 async function verificarCadastroExistente(email) {
     var instrucaoSql = `
     SELECT * FROM usuario WHERE email = '${email}'`;
@@ -47,5 +56,6 @@ module.exports = {
     cadastrar,
     verificarCadastroExistente,
     listarTodos, 
-    excluirUsuario
+    excluirUsuario,
+    editar
 };

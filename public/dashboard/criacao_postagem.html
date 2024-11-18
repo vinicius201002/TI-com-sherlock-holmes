@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criação/Edição postagem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+    <link rel="stylesheet" href="../styles/criacao_postagem.css">
+    <script src="scripts/sessao.js"></script>
+</head>
+<body>
+    <div class="barra_lateral">
+        <div class="option">
+            <i class="fa-solid fa-chart-simple"></i>
+            <p>Dashboard</p>
+        </div>
+        <div class="option">
+            <i class="fa-solid fa-user"></i>
+            <p>Usuários</p>
+        </div>
+        <div class="option">
+            <i class="fa-solid fa-book"></i>
+            <p>Postagens</p>
+        </div>
+        <div class="option">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <p>Sair</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="form">
+            <div class="cabecalho">
+                <p>Postagem</p>
+            </div>
+            <div class="campo">
+                <p>Título</p>
+                <input type="text" id="ipt_titulo">
+            </div>
+            <div class="campo">
+                <p>Corpo</p>
+                <textarea id="ipt_corpo"></textarea>
+            </div>
+            <div class="campo">
+                <p>Link imagem</p>
+                <input oninput="alterarImagemPrevia()" type="text" id="ipt_linkImagem">
+            </div>
+            <div class="campo">
+                <p>Prévia imagem</p>
+                <img style="height: 30vh; width: auto;" id="img_previa">
+            </div>
+            <div class="campo">
+                <button onclick="cadastrar()">Criar nova postagem</button>
+            </div>
+            
+          
+        </div>
+     
+    </div>
+</body>
+</html>
+<script>
+  function alterarImagemPrevia() {
+    img_previa.src = ipt_linkImagem.value;
+    }
+
+    function cadastrar() {
+        var titulo = ipt_titulo.value;
+        var corpo = ipt_corpo.value;
+        var linkImagem = ipt_linkImagem.value;
+
+        if (titulo == "" || corpo == "" || linkImagem == "") {
+            alert("Preencha todos os campos");
+        } else {
+            fetch("/postagens/cadastrar", {
+                method: "POST",
+                headers: {
+                      "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    tituloServer: titulo,
+                    corpoServer: corpo,
+                    linkImagemServer: linkImagem,
+                    idUsuarioServer: sessionStorage.getItem("id_usuario")
+                })
+                
+            })
+            .then(function (resposta) {
+                 if (resposta.status == 200) {
+                alert("Cadastro feito com sucesso");
+                window.location.reload();
+               } else {
+                console.log(resposta)
+               }
+            })
+            .catch(function (erro) {
+               console.log(erro);
+            })
+        }
+    }
+</script>

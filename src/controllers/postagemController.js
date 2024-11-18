@@ -49,8 +49,25 @@ function listarPostagensPorUsuario(req, res) {
     })
 
 }
+
+function excluir(req, res) {
+    var id = req.params.id;
+    postagemModel.excluir(id)
+    .then(resposta => {
+        if (resposta.length == 0 ) {
+            res.status(204).json(resposta);
+        } else {
+            res.status(200).json(resposta);
+        }
+    })
+    .catch(erro => {
+        res.status(500).json(erro.sqlMessage);
+    })
+
+}
 module.exports = {
     cadastrar,
     listarTodasPostagens,
-    listarPostagensPorUsuario
+    listarPostagensPorUsuario,
+    excluir
 }

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postagens</title>
+    <link rel="stylesheet" href="../styles/postagens.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+    <script src="scripts/sessao.js"></script>
+</head>
+<body>
+    <div class="barra_lateral">
+        <div class="option">
+            <i class="fa-solid fa-chart-simple"></i>
+            <p>Dashboard</p>
+        </div>
+        <div class="option">
+            <i class="fa-solid fa-user"></i>
+            <p>Usuários</p>
+        </div>
+        <div class="option">
+            <i class="fa-solid fa-book"></i>
+            <p>Postagens</p>
+        </div>
+        <div class="option">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <p>Sair</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="form">
+            <div class="cabecalho">
+                <p>Postagem</p>
+                <div class="buscar">
+                    <input type="text" id="ipt_buscar">
+                    <button>Buscar</button>
+                </div>
+                <button onclick="exibirModalCriacaoUsuario()">Nova postagem</button>
+            </div>
+            <table style="width: 100%;" class="tabela">
+                <!-- Header da tabela -->
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
+                </tr>
+                <tbody id="corpo_tabela">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+     window.addEventListener("load", (event) => {
+        fetch("/postagens/listar", {
+            method: "GET"
+        })
+            .then((resposta) => {
+                resposta.json()
+                    .then((dados) => {
+                        // adicionar dados à tabela
+                        for (var i = 0; i < dados.length; i++) {
+                            corpo_tabela.innerHTML += `
+                            <td>${dados[i].id}</td>
+                            <td>${dados[i].titulo}</td>
+                            <td><i class="fa-solid fa-pencil" onclick=exibirTelaEdicao(${JSON.stringify(dados[i])})></i></td>
+                            <td><i onclick=deletarPostagem(${dados[i].id}) class="fa-solid fa-trash"></i></td>
+                            `;
+                        }
+                    })
+                    .catch((erro) => {
+                        console.error("Erro ao converter JSON", erro)
+                    })
+            })
+            .catch((erro) => {
+                console.error(erro);
+            })
+    });
+
+    function deletarPostagem(id) {
+        fetch(`/postagens/${id}`, {
+            method: "DELETE"
+        })
+        .then((resposta) => {
+            if (resposta.status == 200) {
+                alert("Exclusão feita com sucesso.");
+                window.location.reload();
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+        })
+
+
+    }
+</script>

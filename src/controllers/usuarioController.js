@@ -38,6 +38,47 @@ function autenticar(req, res) {
 
 }
 
+async function editar(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var id = req.body.idServer;
+    var nome = req.body.nomeServer;
+    var email = req.body.emailServer;
+    var senha = req.body.senhaServer;
+    var dtNasc = req.body.dtNascServer;
+    var adm = req.body.isADMServer;
+
+    // Convertendo escolha de ADM
+    if (adm) {
+        adm = 1;
+    } else {
+        adm = 0;
+    }
+
+    // Faça as validações dos valores
+    if (nome == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (email == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (senha == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    } else if (dtNasc == undefined) {
+        res.status(400).send("Sua data de nascimento está undefined");
+    } else {
+
+
+           await usuarioModel.editar(id, nome, email, senha, dtNasc, adm)
+           .then(resposta => {
+            res.status(200).send()
+           })
+           .catch(error => {
+            console.log(error)
+           })
+      
+         
+    }
+
+}
+
 async function cadastrar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nome = req.body.nomeServer;
@@ -118,5 +159,6 @@ module.exports = {
     autenticar,
     cadastrar,
     listarUsuarios,
-    excluirUsuario
+    excluirUsuario,
+    editar
 }

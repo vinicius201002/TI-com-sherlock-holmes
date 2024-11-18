@@ -23,10 +23,6 @@
                     <input type="password" id="ipt_senha">
                 </div>
                 <button onclick="logar()">Login</button>
-                <div class="permanecer-conectado">
-                    <input id="chkbox_permanecer" type="checkbox">
-                    <p>Permanecer conectado</p>
-                </div>
                 <p>Não possui conta? <a class="cadastrar" href="cadastro.html">Cadastrar-se</a></p>
             </div>
             <div class="imagem"></div>
@@ -38,7 +34,6 @@
     function logar() {;
         var email = ipt_email.value;
         var senha = ipt_senha.value;
-        var permanecerLogado = chkbox_permanecer.checked;
 
         if (email != "" && senha != "") {
             fetch("/usuarios/autenticar", {
@@ -57,12 +52,11 @@
                     // fazendo operações com o resultado do login
                     resposta.json().then( (dados) => {
                         var dadosUsuario = dados[0];
-                        var idUsuario = dadosUsuario.idUsuario;
-                        if (permanecerLogado) {
-                            sessionStorage.setItem("id_usuario", idUsuario);
-                        }
+                        var idUsuario = dadosUsuario.id;
                         // cadastrando acesso
                         cadastrarAcesso(dadosUsuario.idUsuario);
+                        sessionStorage.setItem("id_usuario", idUsuario);
+                        window.location.href = "home.html"
                         
                     }).catch((erro) => {
                         console.log("Erro ao recuperar JSON da resposta: ", erro)

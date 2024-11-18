@@ -15,4 +15,8 @@ router.get('/listar/:fkUsuario', function (req, res) {
     postagemController.listarPostagensPorUsuario(req, res);
 });
 
+router.delete('/:id', function (req, res) {
+    postagemController.excluir(req, res);
+})
+
 module.exports = router;
