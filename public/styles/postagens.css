@@ -8,6 +8,11 @@ body {
     display: flex;
 }
 
+.barra_lateral a {
+    color: white;
+    text-decoration: none;
+}
+
 .barra_lateral {
     width: 20vw;
     height: 100vh;

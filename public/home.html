@@ -98,6 +98,9 @@
     }
 
     function gerarDescricaoMenor(corpo) {
+        if (corpo.length < 100) {
+            return corpo;
+        }
         return corpo.substr(0, 100) + "...";
     }
 </script>

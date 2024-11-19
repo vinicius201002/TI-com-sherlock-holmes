@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criação/Edição postagem</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link
-    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-    rel="stylesheet">
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../styles/criacao_postagem.css">
     <script src="scripts/sessao.js"></script>
 </head>
+
 <body>
     <div class="barra_lateral">
         <div class="option">
             <i class="fa-solid fa-chart-simple"></i>
-            <p>Dashboard</p>
+            <p><a href="dashboard.html">Dashboard</a></p>
         </div>
         <div class="option">
             <i class="fa-solid fa-user"></i>
-            <p>Usuários</p>
+            <p><a href="usuarios.html">Usuários</a></p>
         </div>
         <div class="option">
             <i class="fa-solid fa-book"></i>
-            <p>Postagens</p>
+            <p><a href="postagens.html">Postagens</a></p>
         </div>
         <div class="option">
             <i class="fa-solid fa-right-to-bracket"></i>
@@ -54,52 +56,139 @@
                 <img style="height: 30vh; width: auto;" id="img_previa">
             </div>
             <div class="campo">
-                <button onclick="cadastrar()">Criar nova postagem</button>
+                <button id="btnAcao">Criar nova postagem</button>
             </div>
-            
-          
+
+
         </div>
-     
+
     </div>
 </body>
+
 </html>
 <script>
-  function alterarImagemPrevia() {
-    img_previa.src = ipt_linkImagem.value;
+
+    if (sessionStorage.getItem("id_postagem")) {
+        // O usuário está editando uma postagem
+        const botao = document.getElementById("btnAcao");
+        btnAcao.innerHTML = "Editar postagem";
+        botao.addEventListener("click",() => {
+           editarPostagem(sessionStorage.getItem("id_postagem"));
+        })
+ // devemos carregar as informações da postagem a ser editada
+ carregarInformacoes(sessionStorage.getItem("id_postagem")); 
+       
+      
+    } else {
+        const botao = document.getElementById("btnAcao");
+        btnAcao.innerHTML = "Cadastrar nova postagem";
+        botao.addEventListener("click", 
+            cadastrar(sessionStorage.getItem("id_postagem"))
+        )
+
+       
     }
 
-    function cadastrar() {
+
+    function editarPostagem(id) {
         var titulo = ipt_titulo.value;
         var corpo = ipt_corpo.value;
         var linkImagem = ipt_linkImagem.value;
-
+        
         if (titulo == "" || corpo == "" || linkImagem == "") {
             alert("Preencha todos os campos");
         } else {
-            fetch("/postagens/cadastrar", {
-                method: "POST",
+            var informacoes = {
+            tituloServer: titulo,
+            corpoServer: corpo,
+            linkImagemServer: linkImagem
+        }
+
+            fetch(`postagens/atualizar/${id}`, {
+                method: "PATCH",
                 headers: {
-                      "Content-Type": "application/json"
+                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    tituloServer: titulo,
-                    corpoServer: corpo,
-                    linkImagemServer: linkImagem,
-                    idUsuarioServer: sessionStorage.getItem("id_usuario")
-                })
+                body: JSON.stringify(informacoes)
                 
             })
-            .then(function (resposta) {
-                 if (resposta.status == 200) {
-                alert("Cadastro feito com sucesso");
-                window.location.reload();
-               } else {
-                console.log(resposta)
-               }
+            .then((resposta) => {
+                if (resposta.ok) {
+                    alert("Postagem alterada com sucesso.");
+                     // no final de tudo, vamos deletar o id da postagem do sessionStorage
+                    sessionStorage.removeItem("id_postagem");
+                    window.location.href = "postagens.html";
+                }
             })
-            .catch(function (erro) {
-               console.log(erro);
+            .catch((erro) => {
+                console.error(erro);
             })
         }
+      
+        
+        }
+    function cadastrar() {
+            var titulo = ipt_titulo.value;
+            var corpo = ipt_corpo.value;
+            var linkImagem = ipt_linkImagem.value;
+
+            if (titulo == "" || corpo == "" || linkImagem == "") {
+                alert("Preencha todos os campos");
+            } else {
+                fetch("/postagens/cadastrar", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        tituloServer: titulo,
+                        corpoServer: corpo,
+                        linkImagemServer: linkImagem,
+                        idUsuarioServer: sessionStorage.getItem("id_usuario")
+                    })
+
+                })
+                    .then(function (resposta) {
+                        if (resposta.status == 200) {
+                            alert("Cadastro feito com sucesso");
+                            window.location.reload();
+                        } else {
+                            console.log(resposta)
+                        }
+                    })
+                    .catch(function (erro) {
+                        console.log(erro);
+                    })
+            }
+        }
+    function alterarImagemPrevia() {
+            img_previa.src = ipt_linkImagem.value;
+        }
+
+    function carregarInformacoes(id) {
+        fetch(`/postagens/listar/${id}`, {
+            method: 'GET'
+        })
+        .then((resposta => {
+            if (resposta.ok) {
+                resposta.json()
+                .then((resultado) => {
+                    var dados = resultado[0];
+                    console.log(dados.titulo)
+                    ipt_titulo.innerHTML = dados.titulo;
+                    ipt_corpo.innerHTML = dados.corpo;
+                    ipt_linkImagem.innerHTML = dados.imagem;
+                })
+                .catch((erro) => {
+                    console.log(erro);
+                })
+            } else {    
+                console.log("Possivelmente algo deu errado: ", resposta);
+            }
+        }))
+        .catch((erro) => {
+            console.log(erro)
+        })
+        
     }
 </script>

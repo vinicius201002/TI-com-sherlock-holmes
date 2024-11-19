@@ -11,63 +11,92 @@ function cadastrar(req, res) {
         res.status(400).send("Algum campo do body está undefined!");
     } else {
         postagemModel.cadastrar(titulo, corpo, linkImagem, idUsuario)
-        .then((resposta) => {
-            res.status(200).json(resposta)
-        })
-        .catch(
-            function (erro) {
-                console.log(erro);
-                console.log("\nHouve um erro ao realizar o cadastro da postagem! Erro: ", erro.sqlMessage);
-                res.status(500).json(erro.sqlMessage);
-            }
-        )
+            .then((resposta) => {
+                res.status(200).json(resposta)
+            })
+            .catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o cadastro da postagem! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            )
     }
 }
 
 function listarTodasPostagens(req, res) {
     postagemModel.listarTodasPostagens()
-    .then(resposta => {
-        res.status(200).json(resposta);
-    })
-    .catch(erro => {
-        res.status(500).json(erro.sqlMessage);
-    })
+        .then(resposta => {
+            res.status(200).json(resposta);
+        })
+        .catch(erro => {
+            res.status(500).json(erro.sqlMessage);
+        })
 }
 
 function listarPostagensPorUsuario(req, res) {
     var fkUsuario = req.params.fkUsuario;
     postagemModel.listarPostagensPorUsuario(fkUsuario)
-    .then(resposta => {
-        if (resposta.length == 0 ) {
-            res.status(204).json(resposta);
-        } else {
-            res.status(200).json(resposta);
-        }
-    })
-    .catch(erro => {
-        res.status(500).json(erro.sqlMessage);
-    })
+        .then(resposta => {
+            if (resposta.length == 0) {
+                res.status(204).json(resposta);
+            } else {
+                res.status(200).json(resposta);
+            }
+        })
+        .catch(erro => {
+            res.status(500).json(erro.sqlMessage);
+        })
 
 }
 
 function excluir(req, res) {
     var id = req.params.id;
     postagemModel.excluir(id)
-    .then(resposta => {
-        if (resposta.length == 0 ) {
-            res.status(204).json(resposta);
-        } else {
-            res.status(200).json(resposta);
-        }
-    })
-    .catch(erro => {
-        res.status(500).json(erro.sqlMessage);
-    })
+        .then(resposta => {
+            if (resposta.length == 0) {
+                res.status(204).json(resposta);
+            } else {
+                res.status(200).json(resposta);
+            }
+        })
+        .catch(erro => {
+            res.status(500).json(erro.sqlMessage);
+        })
 
+}
+
+function atualizar(req, res) {
+    var id = req.params.id;
+    postagemModel.atualizar(id, titulo, corpo, linkImagem)
+        .then(resposta => {
+            res.status(200).json(resposta);
+        })
+        .catch(erro => {
+            res.status(500).json(erro.sqlMessage);
+        })
+}
+
+function listarPostagensPorId(req, res) {
+    var id = req.params.id;
+
+    if (id == undefined) {
+        res.status(400).send("ID indefinido")
+    } else {
+        postagemModel.listarPostagensPorIdPostagem(id)
+            .then(resposta => {
+                res.status(200).json(resposta);
+            })
+            .catch(erro => {
+                res.status(500).json(erro.sqlMessage);
+            })
+    }
 }
 module.exports = {
     cadastrar,
     listarTodasPostagens,
     listarPostagensPorUsuario,
-    excluir
+    excluir,
+    atualizar,
+    listarPostagensPorId
 }
