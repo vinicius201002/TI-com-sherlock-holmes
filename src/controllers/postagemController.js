@@ -68,6 +68,10 @@ function excluir(req, res) {
 
 function atualizar(req, res) {
     var id = req.params.id;
+    var titulo = req.body.tituloServer;
+    var corpo = req.body.corpoServer;
+    var linkImagem = req.body.linkImagemServer;
+
     postagemModel.atualizar(id, titulo, corpo, linkImagem)
         .then(resposta => {
             res.status(200).json(resposta);
@@ -80,23 +84,52 @@ function atualizar(req, res) {
 function listarPostagensPorId(req, res) {
     var id = req.params.id;
 
+
     if (id == undefined) {
         res.status(400).send("ID indefinido")
     } else {
         postagemModel.listarPostagensPorIdPostagem(id)
             .then(resposta => {
-                res.status(200).json(resposta);
+                console.log(resposta)
+                   res.status(200).json(resposta)
             })
             .catch(erro => {
                 res.status(500).json(erro.sqlMessage);
             })
     }
 }
+
+function renderizarPostagens(req, res) {
+    var id = req.params.id;
+
+
+    if (id == undefined) {
+        res.status(400).send("ID indefinido")
+    } else {
+        postagemModel.listarPostagensPorIdPostagem(id)
+            .then(resposta => {
+                console.log(resposta)
+                if (resposta.length == 0) {
+                    console.log("nenhum artigo encontrado")
+                    res.status(404).render('404');
+                } else {
+                    res.render('artigo', resposta[0]);
+                }
+                   
+            })
+            .catch(erro => {
+                res.status(500).json(erro.sqlMessage);
+            })
+    }
+}
+
+
 module.exports = {
     cadastrar,
     listarTodasPostagens,
     listarPostagensPorUsuario,
     excluir,
     atualizar,
-    listarPostagensPorId
+    listarPostagensPorId,
+    renderizarPostagens
 }

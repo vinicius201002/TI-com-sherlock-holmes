@@ -104,7 +104,8 @@
             linkImagemServer: linkImagem
         }
 
-            fetch(`postagens/atualizar/${id}`, {
+
+            fetch(`/postagens/atualizar/${id}`, {
                 method: "PATCH",
                 headers: {
                      "Content-Type": "application/json"
@@ -161,13 +162,14 @@
                     })
             }
         }
-    function alterarImagemPrevia() {
-            img_previa.src = ipt_linkImagem.value;
-        }
+
 
     function carregarInformacoes(id) {
         fetch(`/postagens/listar/${id}`, {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Accept': 'text/json'
+            }
         })
         .then((resposta => {
             if (resposta.ok) {
@@ -175,9 +177,10 @@
                 .then((resultado) => {
                     var dados = resultado[0];
                     console.log(dados.titulo)
-                    ipt_titulo.innerHTML = dados.titulo;
-                    ipt_corpo.innerHTML = dados.corpo;
-                    ipt_linkImagem.innerHTML = dados.imagem;
+                    ipt_titulo.value = dados.titulo;
+                    ipt_corpo.value = dados.corpo;
+                    ipt_linkImagem.value = dados.imagem;
+                    img_previa.src = dados.imagem;
                 })
                 .catch((erro) => {
                     console.log(erro);
@@ -191,4 +194,8 @@
         })
         
     }
+
+    function alterarImagemPrevia() {
+            img_previa.src = ipt_linkImagem.value;
+        }
 </script>

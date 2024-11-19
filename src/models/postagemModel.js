@@ -17,7 +17,7 @@ function listarTodasPostagens() {
 }
 
 function listarPostagensPorIdPostagem(id) {
-    var instrucaoSql = `SELECT * FROM Postagem WHERE id = ${id}`;
+    var instrucaoSql = `SELECT * FROM Postagem JOIN usuario on fkUsuario = usuario.id WHERE Postagem.id = ${id};`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -37,7 +37,9 @@ function excluir(id) {
 }
 
 function atualizar(id, titulo, corpo, linkImagem) {
-    var instrucaoSql = `UPDATE FROM postagem SET titulo = '${titulo}', corpo = '${corpo}', linkImagem = '${linkImagem}' WHERE id = ${id}`
+    var instrucaoSql = `UPDATE postagem SET titulo = '${titulo}', corpo = '${corpo}', imagem = '${linkImagem}' WHERE id = ${id}`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 module.exports = {
     cadastrar,

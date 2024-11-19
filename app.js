@@ -15,6 +15,7 @@ var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 
+
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var acessoRouter = require("./src/routes/acessos");
@@ -23,8 +24,14 @@ var postagemRouter = require("./src/routes/postagens");
 // var comentarioRouter = require("./src/routes/comentarios");
 
 
+// Aqui definimos que o diretório das views será em /src/views
+app.set('views', path.join(__dirname, 'src', 'views'));  
+// Aqui definimos EJS como motor de template
+app.set('view engine', 'ejs'); 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
@@ -35,8 +42,6 @@ app.use("/acessos", acessoRouter);
 app.use("/postagens", postagemRouter);
 // app.use("/visualizacoes", visualizazaoRouter);
 // app.use("/comentarios", comentarioRouter);
-
-
 
 app.listen(PORTA_APP, function () {
     console.log(`
