@@ -114,11 +114,12 @@ function renderizarPostagens(req, res) {
                     res.status(404).render('404');
                 } else {
                     res.render('artigo', resposta[0]);
+                    res.status(200).send()
                 }
                    
             })
             .catch(erro => {
-                res.status(500).json(erro.sqlMessage);
+                res.status(500).render('500', erro);
             })
     }
 }

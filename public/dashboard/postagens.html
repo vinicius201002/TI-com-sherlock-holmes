@@ -11,7 +11,7 @@
     <link
     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
     rel="stylesheet">
-    <script src="scripts/sessao.js"></script>
+    <script src="/scripts/sessao.js"></script>
 </head>
 <body>
     <div class="barra_lateral">
@@ -29,7 +29,7 @@
         </div>
         <div class="option">
             <i class="fa-solid fa-right-to-bracket"></i>
-            <p>Sair</p>
+            <p onclick="deslogar()">Sair</p>
         </div>
     </div>
     <div class="container">
@@ -40,7 +40,7 @@
                     <input type="text" id="ipt_buscar">
                     <button>Buscar</button>
                 </div>
-                <button onclick="exibirModalCriacaoUsuario()">Nova postagem</button>
+                <button onclick="abrirTelaCriacaoPostagem()">Nova postagem</button>
             </div>
             <table style="width: 100%;" class="tabela">
                 <!-- Header da tabela -->
@@ -105,5 +105,16 @@
     function exibirTelaEdicao(id) {
         sessionStorage.setItem("id_postagem", id);
         window.location.href = "criacao_postagem.html";
+    }
+
+    function abrirTelaCriacaoPostagem() {
+        window.location.href = "criacao_postagem.html";
+    }
+
+    
+    function deslogar() {
+        sessionStorage.clear();
+        
+        window.location.reload();
     }
 </script>

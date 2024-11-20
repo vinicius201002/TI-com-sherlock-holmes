@@ -54,13 +54,13 @@
                         var dadosUsuario = dados[0];
                         var idUsuario = dadosUsuario.id;
                         // cadastrando acesso
-                        cadastrarAcesso(dadosUsuario.idUsuario);
+                        cadastrarAcesso(idUsuario);
                         sessionStorage.setItem("id_usuario", idUsuario);
                         // Definindo controle de adm
                         if (dadosUsuario.admin.data[0] == 1) {
                             sessionStorage.setItem("adm", true);
                         }
-                        window.location.href = "home.html"
+                        //window.location.href = "home.html"
                         
                     }).catch((erro) => {
                         console.log("Erro ao recuperar JSON da resposta: ", erro)

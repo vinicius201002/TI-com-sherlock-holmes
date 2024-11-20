@@ -12,7 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="../styles/criacao_postagem.css">
-    <script src="scripts/sessao.js"></script>
+    <script src="/scripts/sessao.js"></script>
 </head>
 
 <body>
@@ -31,7 +31,7 @@
         </div>
         <div class="option">
             <i class="fa-solid fa-right-to-bracket"></i>
-            <p>Sair</p>
+            <p onclick="deslogar()">Sair</p>
         </div>
     </div>
     <div class="container">
@@ -82,8 +82,10 @@
     } else {
         const botao = document.getElementById("btnAcao");
         btnAcao.innerHTML = "Cadastrar nova postagem";
-        botao.addEventListener("click", 
+        botao.addEventListener("click",  () => {
             cadastrar(sessionStorage.getItem("id_postagem"))
+        }
+            
         )
 
        
@@ -198,4 +200,10 @@
     function alterarImagemPrevia() {
             img_previa.src = ipt_linkImagem.value;
         }
+
+        
+    function deslogar() {
+        sessionStorage.clear();
+        window.location.reload();
+    }
 </script>

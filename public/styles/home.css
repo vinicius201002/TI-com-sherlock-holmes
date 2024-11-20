@@ -64,6 +64,10 @@ a {
     color: white;
 }
 
+.opcoes a:hover {
+    cursor: pointer;
+}
+
 main {
     padding: 3rem 3rem 0rem 3rem;
     width:  95vw;

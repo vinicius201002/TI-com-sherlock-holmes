@@ -6,11 +6,11 @@
     <title>Home</title>
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="scripts/sessao.js"></script>
+    <script src="/scripts/sessao.js"></script>
 </head>
 <body>
     <nav  class="navbar">
-        <img src="" alt="logo">
+        <img onclick="direcionarHome()" src="" alt="logo">
         <div class="buscar">
             <input placeholder="Pesquisar" type="text">
             <button>
@@ -18,9 +18,8 @@
             </button>
         </div>
         <ul id="opcoes" class="opcoes">
-            <li><a href="artigos.html">Artigos</a></li>
             <li><a href="minhaconta.html">Minha conta</a></li>
-            <li><a href="sair()">Sair</a></li>
+            <li onclick="deslogar()"><a>Sair</a></li>
         </ul>
     </nav>
     <main>
@@ -29,35 +28,7 @@
             <h1>CONFIRA NOSSAS MONOGRAFIAS</h1>
         </div>
         <div id="cards" class="cards">
-            <div class="card">
-                <div id="artigo-1" class="imagem"></div>
-                <div class="infos">
-                    <p class="titulo-postagem">Entendendo Linux como um verdadeiro detetive</p>
-                    <p class="descricao-postagem">Em 2024, torna-se necessário para todo profissional de T.I dominar e entender o Linux, kernel mundialmen...</p>
-                    <p class="data-postagem">20/10/2024 - Por Vinicius Oliveira</p>
-                </div>
-               
-            </div>
-
-            <div class="card">
-                <div id="artigo-2" class="imagem"></div>
-                <div class="infos">
-                    <p class="titulo-postagem">À fundo em Compiladores, o cérebro por detrás das...</p>
-                    <p class="descricao-postagem">Sabemos a “mágica” realizada pelas linguagens de programação, pois somos programadores, mas como el...</p>
-                    <p class="data-postagem">20/10/2024 - Por Vinicius Oliveira</p>
-                </div>
-               
-            </div>
-
-            <div class="card">
-                <div id="artigo-3" class="imagem"></div>
-                <div class="infos">
-                    <p class="titulo-postagem">Entendendo todos os frameworks Webs e suas ...</p>
-                    <p class="descricao-postagem">Vamos nos aprofundar no conceito de framework Web e detalhar a diferença entre todos eles.</p>
-                    <p class="data-postagem">20/10/2024 - Por Vinicius Oliveira</p>
-                </div>
-               
-            </div>
+            
         </div>
     </main>
 </body>
@@ -102,5 +73,14 @@
             return corpo;
         }
         return corpo.substr(0, 100) + "...";
+    }
+
+    function deslogar() {
+        sessionStorage.clear();
+        window.location.reload();
+    }
+
+    function direcionarHome() {
+        window.location.href = "/home.html";
     }
 </script>

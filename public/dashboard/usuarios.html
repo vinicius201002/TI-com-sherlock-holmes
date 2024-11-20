@@ -12,7 +12,7 @@
         <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-        <script src="scripts/sessao.js"></script>
+        <script src="/scripts/sessao.js"></script>
 </head>
 
 <body>
@@ -101,7 +101,7 @@
         </div>
         <div class="option">
             <i class="fa-solid fa-right-to-bracket"></i>
-            <p>Sair</p>
+            <p onclick="deslogar()">Sair</p>
         </div>
     </div>
     <div class="container">
@@ -269,6 +269,7 @@
         const dataFormatada = dadosUsuario.dtNasc.split("T")[0];
         ipt_dtNasc_edicao.value = dataFormatada;
         // console.log(dadosUsuario.dtNasc)
+        console.log(dadosUsuario.admin.data[0])
         if (dadosUsuario.admin.data[0] == 0) {
             ipt_adm_edicao.checked = false;
         } else {
@@ -316,7 +317,11 @@
                console.log(erro);
             })
         }
+    }
 
+    function deslogar() {
+        sessionStorage.clear();
+        window.location.reload();
     }
 
 </script>

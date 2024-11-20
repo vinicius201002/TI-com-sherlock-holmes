@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
   nome VARCHAR(45),
   email VARCHAR(45),
   senha VARCHAR(45),
-  dtNasc DATE,
+  dtNasc DATETIME DEFAULT CURRENT_TIMESTAMP,
   admin BIT DEFAULT 0,
   PRIMARY KEY (id));
   

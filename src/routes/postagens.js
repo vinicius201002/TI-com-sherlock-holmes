@@ -19,7 +19,7 @@ router.get("/listar/:id", function (req, res) {
 });
 
 // Nova rota para renderizar o artigo usando EJS
-router.get("/artigo/:id", function (req, res) {
+router.get("/:id", function (req, res) {
     postagemController.renderizarPostagens(req, res, function (err, artigo) {
         if (err) {
             return res.status(500).send('Erro ao buscar o artigo');

@@ -12,7 +12,7 @@ function verificarSessao() {
       if (adm) {
         // elemento da navbar
         const opcoes = document.getElementById("opcoes");
-        opcoes.innerHTML += `<li><a href="dashboard/dashboard.html">Dashboard</a></li>`;
+        opcoes.innerHTML += `<li><a href="/dashboard/dashboard.html">Dashboard</a></li>`;
         
       } 
     }

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script src="scripts/sessao.js"></script>
+        <script src="/scripts/sessao.js"></script>
 
 </head>
 
@@ -29,7 +29,7 @@
         </div>
         <div class="option">
             <i class="fa-solid fa-right-to-bracket"></i>
-            <p>Sair</p>
+            <p onclick="deslogar()">Sair</p>
         </div>
     </div>
     <div class="container">
@@ -57,3 +57,10 @@
 </body>
 
 </html>
+<script>
+    
+    function deslogar() {
+        sessionStorage.clear();
+        window.location.reload();
+    }
+</script>
