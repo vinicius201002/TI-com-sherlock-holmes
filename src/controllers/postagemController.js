@@ -102,7 +102,6 @@ function listarPostagensPorId(req, res) {
 function renderizarPostagens(req, res) {
     var id = req.params.id;
 
-
     if (id == undefined) {
         res.status(400).send("ID indefinido")
     } else {

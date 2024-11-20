@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS Usuario (
   admin BIT DEFAULT 0,
   PRIMARY KEY (id));
   
+  ALTER TABLE Usuario MODIFY COLUMN   dtNasc DATETIME DEFAULT CURRENT_TIMESTAMP;
+  
   ALTER TABLE Usuario MODIFY COLUMN admin bit default 0;
   select * from usuario;
   
@@ -37,6 +39,8 @@ CREATE TABLE IF NOT EXISTS Curtida (
 id INT PRIMARY KEY AUTO_INCREMENT,
 dataHora DATETIME,
 fkPostagem INT,
+fkUsuario INT,
+CONSTRAINT fkPostagemUsuario FOREIGN KEY (fkUsuario) REFERENCES Usuario (id),
 CONSTRAINT fkPostagemCurtida FOREIGN KEY (fkPostagem) REFERENCES Postagem (id)
 ON DELETE CASCADE
 );
