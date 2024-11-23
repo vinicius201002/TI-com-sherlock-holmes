@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script src="/scripts/sessao.js"></script>
+    <script src="/scripts/sessao.js"></script>
 
 </head>
 
@@ -29,14 +29,19 @@
     </nav>
     <div class="container">
         <div class="coluna1">
-            <h1> <%=titulo%> </h1>
+            <h1>
+                <%=titulo%>
+            </h1>
             <div style="background-image: url('<%=imagem%>');" class="imagem"></div>
             <div class="info">
-                <p>Publicado por: <%=nome%></p>
-                <p>Publicado em <%=
-                    new Date(dtCriacao).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric'})%>
+                <p>Publicado por: <%=nome%>
                 </p>
-                <p> <%= corpo %> </p>
+                <p>Publicado em <%= new Date(dtCriacao).toLocaleDateString('pt-BR', { day: '2-digit' , month: 'long' ,
+                        year: 'numeric' })%>
+                </p>
+                <p>
+                    <%= corpo %>
+                </p>
             </div>
         </div>
         <div class="coluna2">
@@ -57,19 +62,18 @@
     </div>
     <div class="curtidas">
         <p>Gostou? Considere curtir a postagem!</p>
-        <div class="box-curtidas">
-            <i class="fa-regular fa-heart"></i>
-            <!-- <i class="fa-solid fa-heart"></i> -->
-            <p>700</p>
+        <div id="box-curtidas" class="box-curtidas">
+            <i onclick="verificarCurtida()" class="fa-regular fa-heart"></i>
+            <p id="qtdCurtidas">700</p>
         </div>
     </div>
     <div class="comentarios">
-            <p>Deixe seu comentário</p>
-            <textarea> </textarea>
+        <p>Deixe seu comentário</p>
+        <textarea> </textarea>
         <button>Publicar</button>
         <div class="cards">
             <div class="card">
-                
+
             </div>
         </div>
     </div>
@@ -77,9 +81,57 @@
 
 </html>
 <script>
+    var jaCurtiu = false;
+
+    // Função para obter o ID da postagem da URL
+    function obterIDNoURL() {
+        const caminho = window.location.pathname;
+        const partesDoCaminho = caminho.split('/');
+        return partesDoCaminho[partesDoCaminho.length - 1];
+    }
 
     // buscar curtidas da postagem
-    
+    var idUsuario = sessionStorage.getItem("id_usuario");
+    var idPostagem = obterIDNoURL();
+
+    function listarCurtida(idPostagem, idUsuario) {
+        fetch(`/curtidas/${idPostagem}/${idUsuario}`, {
+            method: "GET"
+        })
+            .then((resposta) => {
+                if (resposta.ok) {
+                    resposta.json()
+                        .then((dados) => {
+                            if (dados.length == 0) {
+                                console.log("Usuário não curtiu essa postagem");
+                            } else {
+                                console.log("Usuário já curtiu a postagem");
+                                jaCurtiu = true;
+                                // Acessa o elemento do DOM
+                                const box_curtidas = document.getElementById('box-curtidas');
+                                // Altera o ícone de coração vazio para cheio
+                                const iconeCurtida = box_curtidas.querySelector('i');
+                                iconeCurtida.classList.remove('fa-regular', 'fa-heart');
+                                iconeCurtida.classList.add('fa-solid', 'fa-heart');
+                            }
+                        })
+                        .catch((erro) => {
+                            console.log("Erro ao converter JSON", erro)
+                        })
+                }
+                else {
+                    console.log("Possível erro na resposta", resposta)
+                }
+            })
+            .catch((erro) => {
+                console.log(erro);
+            })
+
+    }
+
+    listarCurtida(idPostagem, idUsuario);
+    listarNumeroCurtidas()
+
 
     function deslogar() {
         sessionStorage.clear();
@@ -90,4 +142,85 @@
         window.location.href = "/home.html";
     }
 
+    function listarNumeroCurtidas() {
+        fetch(`/curtidas/${idPostagem}`, {
+            method: "GET"
+        })
+            .then((resposta) => {
+                if (resposta.ok) {
+                    resposta.json()
+                        .then((dados) => {
+                            qtdCurtidas.innerHTML = dados[0].qtdCurtidas;
+                        })
+                        .catch((erro) => {
+                            console.log("Erro ao converter JSON", erro)
+                        })
+                }
+                else {
+                    console.log("Possível erro na resposta", resposta)
+                }
+            })
+            .catch((erro) => {
+                console.log(erro);
+            })
+    }
+
+    function verificarCurtida() {
+        if (jaCurtiu) {
+            // Mudando classe para atualizar o visual
+            // Acessa o elemento do DOM
+            const box_curtidas = document.getElementById('box-curtidas');
+            // Altera o ícone de coração vazio para cheio
+            const iconeCurtida = box_curtidas.querySelector('i');
+            iconeCurtida.classList.remove('fa-solid', 'fa-heart');
+            iconeCurtida.classList.add('fa-regular', 'fa-heart');
+
+            // requisição para retirar a curtida
+            fetch(`/curtidas/${idPostagem}/${idUsuario}`, {
+                method: "DELETE"
+            })
+                .then((resposta) => {
+                    if (resposta.ok) {
+                        // alert("Você descurtiu a postagem.");
+                        // decrementando o número de curtidas
+                        // incrementando o valor das curtidas
+                        const p_qtdCurtidas = document.getElementById("qtdCurtidas");
+                        p_qtdCurtidas.innerHTML = Number(p_qtdCurtidas.innerHTML) - 1;
+                    }
+                })
+                .catch((erro) => {
+                    console.log(erro)
+                })
+
+            // no final, indicamos que o curtiu é false
+            jaCurtiu = false;
+
+        } else {
+            const box_curtidas = document.getElementById('box-curtidas');
+            // Altera o ícone de coração vazio para cheio
+            const iconeCurtida = box_curtidas.querySelector('i');
+            iconeCurtida.classList.remove('fa-regular', 'fa-heart');
+            iconeCurtida.classList.add('fa-solid', 'fa-heart');
+
+            // requisição para retirar a curtida
+            fetch(`/curtidas/${idPostagem}/${idUsuario}`, {
+                method: "POST"
+            })
+                .then((resposta) => {
+                    if (resposta.ok) {
+                        // alert("Você curtiu a postagem.");
+                        // incrementando o valor das curtidas
+                        const p_qtdCurtidas = document.getElementById("qtdCurtidas");
+                        p_qtdCurtidas.innerHTML = Number(p_qtdCurtidas.innerHTML) + 1;
+
+                    }
+                })
+                .catch((erro) => {
+                    console.log(erro)
+                })
+
+            jaCurtiu = true;
+        }
+
+    }
 </script>

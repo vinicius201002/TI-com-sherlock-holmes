@@ -20,6 +20,7 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var acessoRouter = require("./src/routes/acessos");
 var postagemRouter = require("./src/routes/postagens");
+var curtidasRouter = require("./src/routes/curtidas");
 // var visualizazaoRouter = require("./src/routes/visualizacoes");
 // var comentarioRouter = require("./src/routes/comentarios");
 
@@ -40,6 +41,7 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/acessos", acessoRouter);
 app.use("/postagens", postagemRouter);
+app.use("/curtidas", curtidasRouter);
 // app.use("/visualizacoes", visualizazaoRouter);
 // app.use("/comentarios", comentarioRouter);
 

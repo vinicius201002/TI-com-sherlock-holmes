@@ -57,12 +57,14 @@ CONSTRAINT fkCriadorComentario FOREIGN KEY (fkUsuario) REFERENCES Usuario (id)
 ON DELETE CASCADE
 );
 
-insert into Usuario (email, senha) values (
+insert into Usuario (email, senha, admin) values (
 "admin@admin",
-"admin"
+"admin",
+1
 ),
 ("admin",
-"admin");
+"admin",
+1);
 
 
 
