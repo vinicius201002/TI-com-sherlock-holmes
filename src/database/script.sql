@@ -47,7 +47,7 @@ ON DELETE CASCADE
 
 CREATE TABLE IF NOT EXISTS Comentario (
 id INT PRIMARY KEY AUTO_INCREMENT,
-dataHora DATETIME, 
+dataHora DATETIME DEFAULT CURRENT_TIMESTAMP, 
 corpo TEXT,
 fkPostagem INT,
 CONSTRAINT fkPostagemComentario FOREIGN KEY (fkPostagem) REFERENCES Postagem (id)
@@ -55,6 +55,18 @@ ON DELETE CASCADE,
 fkUsuario INT,
 CONSTRAINT fkCriadorComentario FOREIGN KEY (fkUsuario) REFERENCES Usuario (id)
 ON DELETE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS Visualizacao (
+   id INT PRIMARY KEY AUTO_INCREMENT,
+    dataHora DATETIME DEFAULT current_timestamp(),
+    fkUsuario INT,
+    CONSTRAINT fkUsuarioVisualizacao FOREIGN KEY (fkUsuario) REFERENCES Usuario (id)
+    ON DELETE CASCADE,
+    fkPostagem INT,
+    CONSTRAINT fkPostagemVisualizacao FOREIGN KEY (fkPostagem) REFERENCES Postagem (id)
+    ON DELETE CASCADE
 );
 
 insert into Usuario (email, senha, admin) values (

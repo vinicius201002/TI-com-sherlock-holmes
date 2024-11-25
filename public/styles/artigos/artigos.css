@@ -164,5 +164,39 @@ a {
     transition: 1s;
 }
 
+.comentarios .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
 
+.comentarios .cards .card {
+    background-color: #D9D9D9;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 70%;
+    height: 10vh;
+    padding: 1rem;
+
+    border-radius: 10px;
+}
+
+.card p {
+    font-weight: bold;
+}
+
+.card img {
+    max-height: 100%;
+}
+
+.card span {
+    color: #0051FF;
+}
+
+.card i {
+    font-size: 4rem;
+    height: 100%;
+}
 

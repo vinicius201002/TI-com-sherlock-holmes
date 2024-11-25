@@ -69,12 +69,14 @@
     </div>
     <div class="comentarios">
         <p>Deixe seu comentário</p>
-        <textarea> </textarea>
-        <button>Publicar</button>
+        <textarea id="corpoComentario"> </textarea>
+        <button onclick="postarComentario()">Publicar</button>
         <div class="cards">
-            <div class="card">
-
-            </div>
+            <!-- <div class="card">
+                 <i class="fa-solid fa-user"></i> 
+                <img src="/assets/img/user_2.png">
+                <p><span>Sherlock Holmes comentou:</span> Elementar, meu caro Watson!</p>
+            </div> -->
         </div>
     </div>
 </body>
@@ -93,6 +95,10 @@
     // buscar curtidas da postagem
     var idUsuario = sessionStorage.getItem("id_usuario");
     var idPostagem = obterIDNoURL();
+    // Buscar comentarios
+    listarComentarios(idPostagem)
+    // cadastrar visualizacao
+    cadastrarVisualizacao(idUsuario, idPostagem) 
 
     function listarCurtida(idPostagem, idUsuario) {
         fetch(`/curtidas/${idPostagem}/${idUsuario}`, {
@@ -136,6 +142,21 @@
     function deslogar() {
         sessionStorage.clear();
         window.location.reload();
+    }
+
+    function cadastrarVisualizacao(idUsuario, idPostagem) {
+        fetch(`/visualizacoes/${idPostagem}/${idUsuario}`, {
+            method: "POST"
+
+        })
+        .then((resposta) => {
+            if (resposta.ok) {
+                console.log("Visualização cadastrada.")
+            }
+        })
+        .catch((erro) => {
+            console.log(erro)
+        })
     }
 
     function direcionarHome() {
@@ -223,4 +244,86 @@
         }
 
     }
+
+    function listarComentarios(idPostagem) {
+        fetch(`/comentarios/${idPostagem}`, {
+            method: "GET"
+        })
+        .then(resposta => {
+            if (resposta.ok) {
+                resposta.json()
+                .then(dados => {
+                    // populando div de comentários
+                    const cards = document.getElementsByClassName('cards')[0]
+                    for (var i = 0; i < dados.length; i++) {
+                        console.log(dados[i])
+                        const card = document.createElement('div');
+                        const img = document.createElement('img');
+                        img.setAttribute("src", "/assets/img/user_2.png");
+                        const p = document.createElement('p');
+                        p.innerHTML = `<span>${dados[i].nome} comentou:</span> ${dados[i].corpo} (${formatarData(dados[i].dataHora)})`
+                        card.append(img)
+                        card.append(p)
+
+                        cards.append(card);
+
+                        card.setAttribute("class", "card");
+
+
+                    }
+                    console.log(dados);
+                })
+                .catch(erro => {
+                    console.log("Erro ao converter o JSON", erro)
+                })
+            }
+        })
+        .catch(erro => {
+            console.log(erro)
+        })
+    } 
+
+    function postarComentario() {
+        var corpo = (corpoComentario.value).trim();
+        console.log(corpo)
+
+        if (corpo != '') {
+            // requisição para postar comentário
+            fetch(`/comentarios/${idPostagem}/${idUsuario}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    corpoServer: corpo
+                })
+            })
+            .then((resposta => {
+                if (resposta.ok) {
+                    window.location.reload();
+                }
+            }))
+            .catch((erro) => {
+                console.log(erro);
+            })
+        } else {
+            alert("Preencha o campo para comentar.");
+        }
+    }
+
+    function formatarData(dateTime) {
+    const meses = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+
+    // Converter string de data para objeto Date
+    const data = new Date(dateTime);
+
+    const dia = data.getDate();
+    const mes = meses[data.getMonth()];
+    const horas = String(data.getHours()).padStart(2, '0');
+    const minutos = String(data.getMinutes()).padStart(2, '0');
+    const segundos = String(data.getSeconds()).padStart(2, '0');
+
+    // Formatar data no formato desejado
+    return `${dia} de ${mes} às ${horas}:${minutos}:${segundos}`;
+}
 </script>

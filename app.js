@@ -21,8 +21,8 @@ var usuarioRouter = require("./src/routes/usuarios");
 var acessoRouter = require("./src/routes/acessos");
 var postagemRouter = require("./src/routes/postagens");
 var curtidasRouter = require("./src/routes/curtidas");
-// var visualizazaoRouter = require("./src/routes/visualizacoes");
-// var comentarioRouter = require("./src/routes/comentarios");
+var visualizazaoRouter = require("./src/routes/visualizacao");
+var comentarioRouter = require("./src/routes/comentarios");
 
 
 // Aqui definimos que o diretório das views será em /src/views
@@ -42,18 +42,17 @@ app.use("/usuarios", usuarioRouter);
 app.use("/acessos", acessoRouter);
 app.use("/postagens", postagemRouter);
 app.use("/curtidas", curtidasRouter);
-// app.use("/visualizacoes", visualizazaoRouter);
-// app.use("/comentarios", comentarioRouter);
+ app.use("/visualizacoes", visualizazaoRouter);
+ app.use("/comentarios", comentarioRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
-    ##   ##  ######   #####             ####       ##     ######     ##              ##  ##    ####    ######  
-    ##   ##  ##       ##  ##            ## ##     ####      ##      ####             ##  ##     ##         ##  
-    ##   ##  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##        ##   
-    ## # ##  ####     #####    ######   ##  ##   ######     ##     ######   ######   ##  ##     ##       ##    
-    #######  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##      ##     
-    ### ###  ##       ##  ##            ## ##    ##  ##     ##     ##  ##             ####      ##     ##      
-    ##   ##  ######   #####             ####     ##  ##     ##     ##  ##              ##      ####    ######  
+   
+██    ██      █████       ██████       █████  
+██    ██     ██   ██     ██           ██   ██ 
+██    ██     ███████     ██   ███     ███████ 
+ ██  ██      ██   ██     ██    ██     ██   ██ 
+  ████       ██   ██      ██████      ██   ██ 
     \n\n\n                                                                                                 
     Servidor do seu site já está rodando! Acesse o caminho a seguir para visualizar .: http://${HOST_APP}:${PORTA_APP} :. \n\n
     Você está rodando sua aplicação em ambiente de .:${process.env.AMBIENTE_PROCESSO}:. \n\n

@@ -17,7 +17,7 @@
     <div class="barra_lateral">
         <div class="option">
             <i class="fa-solid fa-chart-simple"></i>
-            <p><a href="dashboard.html">Dashboard</a></p>
+            <p><a href="dashboard_usuarios.html">Dashboard</a></p>
         </div>
         <div class="option">
             <i class="fa-solid fa-user"></i>
@@ -46,13 +46,42 @@
                 </p>
                 <p class="titulo-kpi">Acessos no site</p>
             </div>
-            <div class="kpi">
-                <p id="valor-kpi-3">
-                    4
-                </p>
-                <p class="titulo-kpi">A definir</p>
-            </div>
         </div>
+        <div class="dashboard-grid">
+            <!-- Linha de Gráficos -->
+            <div class="chart idade-media">
+              <h3>Idade Média dos Usuários</h3>
+              <!-- Gráfico de barras -->
+              <canvas id="chartIdadeMedia"></canvas>
+            </div>
+            <div class="chart acessos-por-dia">
+              <h3>Acessos por Dia</h3>
+              <!-- Gráfico de barras -->
+              <canvas id="chartAcessosPorDia"></canvas>
+            </div>
+        
+            <!-- Linha de Listas -->
+            <div class="chart top-acessos">
+              <h3>Usuários que Mais Acessam</h3>
+              <ol>
+                <li>Usuário 1: 45 acessos</li>
+                <li>Usuário 2: 40 acessos</li>
+                <li>Usuário 3: 35 acessos</li>
+              </ol>
+            </div>
+            <div class="chart maior-engajamento">
+              <h3>Usuário com Maior Engajamento</h3>
+              <p><strong>Usuário 4</strong>: 120 interações (comentários, curtidas)</p>
+            </div>
+            <div class="chart inativos">
+              <h3>Usuários Inativos</h3>
+              <ol>
+                <li>Usuário 5 - Último acesso: 2024-01-01</li>
+                <li>Usuário 6 - Último acesso: 2024-01-10</li>
+                <li>Usuário 7 - Último acesso: 2024-02-15</li>
+              </ol>
+            </div>
+          </div>
     </div>
 </body>
 

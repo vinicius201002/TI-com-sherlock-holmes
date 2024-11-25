@@ -10,7 +10,7 @@ function cadastrar(titulo, corpo, linkImagem, idUsuario) {
 
 function listarTodasPostagens() {
     var instrucaoSql = `
-    SELECT * FROM Postagem;
+    SELECT * FROM Postagem JOIN Usuario ON fkUsuario = usuario.id;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
