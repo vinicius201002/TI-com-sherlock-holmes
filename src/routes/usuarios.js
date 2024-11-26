@@ -24,4 +24,21 @@ router.delete("/excluir/:id", function (req, res) {
     usuarioController.excluirUsuario(req, res);
 })
 
+// dashboard
+router.get("/usuariosMaisAcessos", function (req, res) {
+    usuarioController.listarUsuariosComMaisAcessos(req, res);
+})
+
+router.get("/totalUsuarios", function (req, res) {
+    usuarioController.listarTotalUsuarios(req, res);
+})
+
+router.get("/totalAcessos", function (req, res) {
+    usuarioController.listarTotalAcessos(req, res);
+})
+
+router.get("/usuariosInativos", function (req, res)  {
+    usuarioController.listarUsuariosInativos(req, res);
+})
+
 module.exports = router;

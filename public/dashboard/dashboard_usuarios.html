@@ -61,19 +61,13 @@
             </div>
         
             <!-- Linha de Listas -->
-            <div class="chart top-acessos">
-              <h3>Usuários que Mais Acessam</h3>
-              <ol>
-                <li>Usuário 1: 45 acessos</li>
-                <li>Usuário 2: 40 acessos</li>
-                <li>Usuário 3: 35 acessos</li>
-              </ol>
+            <div id="top-acessos" class="chart top-acessos">
             </div>
-            <div class="chart maior-engajamento">
+            <div id="top-interacoes" class="chart maior-engajamento">
               <h3>Usuário com Maior Engajamento</h3>
               <p><strong>Usuário 4</strong>: 120 interações (comentários, curtidas)</p>
             </div>
-            <div class="chart inativos">
+            <div id="usuarios-inativos" class="chart inativos">
               <h3>Usuários Inativos</h3>
               <ol>
                 <li>Usuário 5 - Último acesso: 2024-01-01</li>
@@ -87,9 +81,116 @@
 
 </html>
 <script>
+  listarUsuariosComMaisAcessos();
+  listarTotalUsuarios()
+  listarTotalAcessos();
+  listarUsuariosInativos();
+
     
     function deslogar() {
         sessionStorage.clear();
         window.location.reload();
     }
+
+    function listarUsuariosComMaisAcessos() {
+      fetch(`/usuarios/usuariosMaisAcessos`, {
+        method: "GET"
+      })
+      .then((resposta) => {
+        if (resposta.ok) {
+          resposta.json()
+          .then((dados) => {
+            var div_top_acessos = document.getElementById("top-acessos");
+            var mensagem = "<h3>Usuários que Mais Acessam</h3><ul>";
+            for (var i = 0; i < 2; i++) {
+              mensagem += `<li><b>${i + 1}. ${dados[i].nome}</b>: ${dados[i].qtdAcesso} acessos</li>`;
+            }
+            mensagem += `</ul>`
+            div_top_acessos.innerHTML = mensagem;
+          })
+          .catch((erro) => {
+            console.log("Erro ao converter o JSON", erro)
+          })
+        }
+      })
+      .catch((erro) => {
+        console.log(erro);
+      })
+    }
+
+    function listarTotalUsuarios() {
+      fetch(`/usuarios/totalUsuarios`, {
+        method: "GET"
+      })
+      .then((resposta) => {
+        if (resposta.ok) {
+          resposta.json()
+          .then((dados) => {
+            var div_kpi_total_usuarios = document.getElementById("valor-kpi-1");
+          div_kpi_total_usuarios.innerHTML = dados[0].qtd_usuarios;
+          })
+          .catch((erro) => {
+            console.log("Erro ao converter o JSON", erro)
+          })
+        }
+      })
+      .catch((erro) => {
+        console.log(erro);
+      })
+    }
+
+    function listarTotalAcessos() {
+      fetch(`/usuarios/totalAcessos`, {
+        method: "GET"
+      })
+      .then((resposta) => {
+        if (resposta.ok) {
+          resposta.json()
+          .then((dados) => {
+            var div_kpi_total_acessos = document.getElementById("valor-kpi-2");
+          div_kpi_total_acessos.innerHTML = dados[0].qtd_acessos;
+          })
+          .catch((erro) => {
+            console.log("Erro ao converter o JSON", erro)
+          })
+        }
+      })
+      .catch((erro) => {
+        console.log(erro);
+      })
+    }
+
+    function listarUsuariosInativos() {
+      fetch(`/usuarios/usuariosInativos`, {
+        method: "GET"
+      })
+      .then((resposta) => {
+        if (resposta.ok) {
+          resposta.json()
+          .then((dados) => {
+            var div_top_acessos = document.getElementById("usuarios-inativos");
+            var mensagem = "<h3>Usuários mais inativos</h3><ul>";
+            for (var i = 0; i < 2; i++) {
+              mensagem += `<li><b>${i + 1}. ${dados[i].nome}</b> - Último acesso: ${formatarData(dados[i].ultimo_acesso)}</li>`;
+            }
+            mensagem += `</ul>`
+            div_top_acessos.innerHTML = mensagem;
+          })
+          .catch((erro) => {
+            console.log("Erro ao converter o JSON", erro)
+          })
+        }
+      })
+      .catch((erro) => {
+        console.log(erro);
+      })
+    }
+    
+
+   function formatarData(data) {
+    var novaData = new Date(data);
+    return `${novaData.getDate()}/${novaData.getUTCMonth() + 1}/${novaData.getFullYear()} às ${novaData.getHours()}:${novaData.getMinutes()}:${novaData.getSeconds()}`
+  
+
+   }
 </script>

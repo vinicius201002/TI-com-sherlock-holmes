@@ -155,10 +155,55 @@ function excluirUsuario(req, res) {
 
 }
 
+function listarUsuariosComMaisAcessos(req ,res) {
+    usuarioModel.listarUsuariosComMaisAcessos()
+    .then((resposta) => {
+        res.status(200).json(resposta);
+    })
+    .catch((erro) => {
+        res.status(500).json(erro.sqlMessage)
+    })
+}
+
+function listarTotalUsuarios(req, res) {
+    usuarioModel.listarTotalUsuarios()
+    .then((resposta) => {
+        res.status(200).json(resposta);
+    })
+    .catch((erro) => {
+        res.status(500).json(erro.sqlMessage)
+    })
+}
+
+function listarTotalAcessos(req, res) {
+    usuarioModel.listarTotalAcessos()
+    .then((resposta) => {
+        res.status(200).json(resposta);
+    })
+    .catch((erro) => {
+        res.status(500).json(erro.sqlMessage)
+    })
+}
+
+function listarUsuariosInativos(req, res) {
+    usuarioModel.listarUsuariosInativos()
+    .then((resposta) => {
+        res.status(200).json(resposta);
+    })
+    .catch((erro) => {
+        res.status(500).json(erro.sqlMessage)
+    })
+}
+
+
 module.exports = {
     autenticar,
     cadastrar,
     listarUsuarios,
     excluirUsuario,
-    editar
+    editar, 
+    listarUsuariosComMaisAcessos,
+    listarTotalUsuarios,
+    listarTotalAcessos,
+    listarUsuariosInativos
 }

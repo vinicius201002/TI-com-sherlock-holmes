@@ -51,11 +51,47 @@ function excluirUsuario(id) {
     return database.executar(instrucaoSql);
 } 
 
+function listarUsuariosComMaisAcessos() {
+    var instrucaoSql = `SELECT Usuario.id, Usuario.nome, count(Acesso.id) as qtdAcesso FROM Usuario
+LEFT JOIN Acesso ON Usuario.id = Acesso.fkUsuario
+GROUP BY Usuario.id
+ORDER BY count(Acesso.id) DESC;`;
+console.log("Executando a instrução SQL: \n" + instrucaoSql);
+return database.executar(instrucaoSql);
+}
+
+function listarTotalUsuarios() {
+    var instrucaoSql = `SELECT count(id) as qtd_usuarios FROM Usuario;`
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+return database.executar(instrucaoSql);
+}
+
+function listarTotalAcessos() {
+    var instrucaoSql = `SELECT count(id) as qtd_acessos FROM Acesso;`
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+return database.executar(instrucaoSql);
+}
+
+function listarUsuariosInativos() {
+    var instrucaoSql = `SELECT Usuario.id, Usuario.nome, MAX(Acesso.dataHora) as 'ultimo_acesso' FROM Usuario  JOIN Acesso
+ON Acesso.fkUsuario = Usuario.id
+GROUP BY Usuario.id
+ORDER BY Acesso.dataHora ASC
+LIMIT 3;`
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+return database.executar(instrucaoSql);
+}
+
+
 module.exports = {
     autenticar,
     cadastrar,
     verificarCadastroExistente,
     listarTodos, 
     excluirUsuario,
-    editar
+    editar,
+    listarUsuariosComMaisAcessos,
+    listarTotalUsuarios,
+    listarTotalAcessos,
+    listarUsuariosInativos
 };
