@@ -20,7 +20,7 @@ function autenticar(req, res) {
                         console.log(resultadoAutenticar);
                         res.status(200).json(resultadoAutenticar)
 
-                        
+
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
@@ -35,6 +35,20 @@ function autenticar(req, res) {
                 }
             );
     }
+
+}
+
+function listarPorId(req, res) {
+    var idUsuario = req.params.id;
+
+    usuarioModel.listarPorId(idUsuario)
+        .then(resposta => {
+            res.status(200).json(resposta)
+        })
+        .catch(erro => {
+            res.status(500).json(erro.sqlMessage);
+        })
+
 
 }
 
@@ -66,15 +80,15 @@ async function editar(req, res) {
     } else {
 
 
-           await usuarioModel.editar(id, nome, email, senha, dtNasc, adm)
-           .then(resposta => {
-            res.status(200).send()
-           })
-           .catch(error => {
-            console.log(error)
-           })
-      
-         
+        await usuarioModel.editar(id, nome, email, senha, dtNasc, adm)
+            .then(resposta => {
+                res.status(200).send()
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+
     }
 
 }
@@ -108,105 +122,105 @@ async function cadastrar(req, res) {
         // verificando se o e-mail já existe
         if (await usuarioModel.verificarCadastroExistente(email) == 0) {
 
-           await usuarioModel.cadastrar(nome, email, senha, dtNasc, adm)
-           .then(resposta => {
-            console.log(resposta)
-            res.status(200).send()
-           })
-           .catch(error => {
-            console.log(error)
-           })
+            await usuarioModel.cadastrar(nome, email, senha, dtNasc, adm)
+                .then(resposta => {
+                    console.log(resposta)
+                    res.status(200).send()
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         } else {
             res.status(400).send("Email já existente");
         }
-      
 
-         
+
+
     }
 }
 
 function listarUsuarios(req, res) {
     usuarioModel.listarTodos()
-    .then(resposta => {
-        if (resposta.length == 0 ) {
-            res.status(204).json(resposta);
-        } else {
-            res.status(200).json(resposta);
-        }
-    })
-    .catch(erro => {
-        res.status(500).json(erro.sqlMessage);
-    })
+        .then(resposta => {
+            if (resposta.length == 0) {
+                res.status(204).json(resposta);
+            } else {
+                res.status(200).json(resposta);
+            }
+        })
+        .catch(erro => {
+            res.status(500).json(erro.sqlMessage);
+        })
 }
 
 function excluirUsuario(req, res) {
     var id = req.params.id;
     usuarioModel.excluirUsuario(id)
-    .then(resposta => {
-        if (resposta.length == 0 ) {
-            res.status(204).json(resposta);
-        } else {
-            res.status(200).json(resposta);
-        }
-    })
-    .catch(erro => {
-        res.status(500).json(erro.sqlMessage);
-    })
+        .then(resposta => {
+            if (resposta.length == 0) {
+                res.status(204).json(resposta);
+            } else {
+                res.status(200).json(resposta);
+            }
+        })
+        .catch(erro => {
+            res.status(500).json(erro.sqlMessage);
+        })
 
 }
 
-function listarUsuariosComMaisAcessos(req ,res) {
+function listarUsuariosComMaisAcessos(req, res) {
     usuarioModel.listarUsuariosComMaisAcessos()
-    .then((resposta) => {
-        res.status(200).json(resposta);
-    })
-    .catch((erro) => {
-        res.status(500).json(erro.sqlMessage)
-    })
-}
-
-function listarTotalUsuarios(req, res) {
-    usuarioModel.listarTotalUsuarios()
-    .then((resposta) => {
-        res.status(200).json(resposta);
-    })
-    .catch((erro) => {
-        res.status(500).json(erro.sqlMessage)
-    })
-}
-
-function listarTotalAcessos(req, res) {
-    usuarioModel.listarTotalAcessos()
-    .then((resposta) => {
-        res.status(200).json(resposta);
-    })
-    .catch((erro) => {
-        res.status(500).json(erro.sqlMessage)
-    })
-}
-
-function listarUsuariosInativos(req, res) {
-    var dtInicio = req.params.dtInicio;
-    var dtFim = req.params.dtFim;
-
-        usuarioModel.listarUsuariosInativos(dtInicio, dtFim)
         .then((resposta) => {
             res.status(200).json(resposta);
         })
         .catch((erro) => {
             res.status(500).json(erro.sqlMessage)
         })
-   
+}
+
+function listarTotalUsuarios(req, res) {
+    usuarioModel.listarTotalUsuarios()
+        .then((resposta) => {
+            res.status(200).json(resposta);
+        })
+        .catch((erro) => {
+            res.status(500).json(erro.sqlMessage)
+        })
+}
+
+function listarTotalAcessos(req, res) {
+    usuarioModel.listarTotalAcessos()
+        .then((resposta) => {
+            res.status(200).json(resposta);
+        })
+        .catch((erro) => {
+            res.status(500).json(erro.sqlMessage)
+        })
+}
+
+function listarUsuariosInativos(req, res) {
+    var dtInicio = req.params.dtInicio;
+    var dtFim = req.params.dtFim;
+
+    usuarioModel.listarUsuariosInativos(dtInicio, dtFim)
+        .then((resposta) => {
+            res.status(200).json(resposta);
+        })
+        .catch((erro) => {
+            res.status(500).json(erro.sqlMessage)
+        })
+
 }
 
 function listarFaixasEtarias(req, res) {
     usuarioModel.listarFaixasEtarias()
-    .then((resposta) => {
-        res.status(200).json(resposta);
-    })
-    .catch((erro) => {
-        res.status(500).json(erro.sqlMessage)
-    })
+        .then((resposta) => {
+            res.status(200).json(resposta);
+        })
+        .catch((erro) => {
+            res.status(500).json(erro.sqlMessage)
+        })
 }
 
 function listarAcessosPorDia(req, res) {
@@ -214,26 +228,26 @@ function listarAcessosPorDia(req, res) {
     var dtFim = req.params.dtFim;
 
     usuarioModel.listarAcessosPorDia(dtInicio, dtFim)
-    .then((resposta) => {
-        res.status(200).json(resposta);
-    })
-    .catch((erro) => {
-        res.status(500).json(erro.sqlMessage)
-    })
+        .then((resposta) => {
+            res.status(200).json(resposta);
+        })
+        .catch((erro) => {
+            res.status(500).json(erro.sqlMessage)
+        })
 }
 
 function listarUsuariosComMaisInteracoes(req, res) {
     var dtInicio = req.params.dtInicio;
     var dtFim = req.params.dtFim;
 
-    
+
     usuarioModel.listarUsuariosComMaisInteracoes(dtInicio, dtFim)
-    .then((resposta) => {
-        res.status(200).json(resposta);
-    })
-    .catch((erro) => {
-        res.status(500).json(erro.sqlMessage)
-    })
+        .then((resposta) => {
+            res.status(200).json(resposta);
+        })
+        .catch((erro) => {
+            res.status(500).json(erro.sqlMessage)
+        })
 
 }
 
@@ -242,12 +256,13 @@ module.exports = {
     cadastrar,
     listarUsuarios,
     excluirUsuario,
-    editar, 
+    editar,
     listarUsuariosComMaisAcessos,
     listarTotalUsuarios,
     listarTotalAcessos,
     listarUsuariosInativos,
     listarFaixasEtarias,
     listarAcessosPorDia,
-    listarUsuariosComMaisInteracoes
+    listarUsuariosComMaisInteracoes,
+    listarPorId
 }

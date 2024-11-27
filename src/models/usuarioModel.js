@@ -45,6 +45,12 @@ function listarTodos() {
     return database.executar(instrucaoSql);
 }
 
+function listarPorId(idUsuario) {
+    var instrucaoSql = `SELECT * FROM usuario WHERE id = ${idUsuario}`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function excluirUsuario(id) {
     var instrucaoSql = `DELETE FROM usuario where id = ${id}`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -219,5 +225,6 @@ module.exports = {
     listarUsuariosInativos,
     listarFaixasEtarias,
     listarAcessosPorDia,
-    listarUsuariosComMaisInteracoes
+    listarUsuariosComMaisInteracoes,
+    listarPorId
 };

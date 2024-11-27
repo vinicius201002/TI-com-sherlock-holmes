@@ -20,6 +20,10 @@ router.get("/", function (req, res) {
     usuarioController.listarUsuarios(req, res);
 });
 
+router.get("/:id", (req, res) => {
+    usuarioController.listarPorId(req, res);
+})
+
 router.delete("/excluir/:id", function (req, res) {
     usuarioController.excluirUsuario(req, res);
 })

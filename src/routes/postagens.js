@@ -39,4 +39,13 @@ router.patch("/atualizar/:id", function (req, res) {
     postagemController.atualizar(req, res);
 });
 
+// Dashboard
+router.get("/dashboard/postagensMaisEngajadas/:idPostagem", (req, res) => {
+    postagemController.listarPostagensMaisEngajada(req, res);
+})
+
+router.get("/dashboard/ultimosComentarios/:idPostagem", (req, res) => {
+    postagemController.listarComentarios(req, res);
+})
+
 module.exports = router;

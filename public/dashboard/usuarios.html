@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link
+    <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-        <script src="/scripts/sessao.js"></script>
+    <script src="/scripts/sessao.js"></script>
 </head>
 
 <body>
     <!-- Modal criação de usuário -->
-     <div id="modal-container-criacao-usuario" class="modal-container">
+    <div id="modal-container-criacao-usuario" class="modal-container">
         <div id="modalCriarUsuario" class="modal">
             <div class="cabecalho-modal">
                 <i onclick="fecharModalCriacaoUsuario()" class="fa-solid fa-xmark"></i>
@@ -49,47 +49,51 @@
                 <p id="erro"></p>
             </div>
             <button onclick="criarUsuario()">Cadastrar</button>
+        </div>
+        <div id="modalEditarUsuario" class="modal">
+            <div class="cabecalho-modal">
+                <i onclick="fecharModalCriacaoUsuario()" class="fa-solid fa-xmark"></i>
             </div>
-            <div id="modalEditarUsuario" class="modal">
-                <div class="cabecalho-modal">
-                    <i onclick="fecharModalCriacaoUsuario()" class="fa-solid fa-xmark"></i>
-                </div>
-                <div class="cabecalho-modal">
-                    <p>Editar usuário</p>
-                </div>
-                <div class="campo">
-                    <p>Nome</p>
-                    <input type="text" id="ipt_nome_edicao">
-                </div>
-                <div class="campo">
-                    <p>E-mail</p>
-                    <input type="text" id="ipt_email_edicao">
-                </div>
-                <div class="campo">
-                    <p>Senha</p>
-                    <input type="text" id="ipt_senha_edicao">
-                </div>
-                <div class="campo">
-                    <p>Data de nascimento</p>
-                    <input type="date" id="ipt_dtNasc_edicao">
-                </div>
-                <div class="campo">
-                    <p>Administrador</p>
-                    <input type="checkbox" id="ipt_adm_edicao">
-                </div>
-                <div class="erro">
-                    <p id="erro_edicao"></p>
-                </div>
-                <button onclick="editarUsuario()">Editar</button>
-                </div>
-     </div>
-    
-    
-    
-     <div class="barra_lateral">
+            <div class="cabecalho-modal">
+                <p>Editar usuário</p>
+            </div>
+            <div class="campo">
+                <p>Nome</p>
+                <input type="text" id="ipt_nome_edicao">
+            </div>
+            <div class="campo">
+                <p>E-mail</p>
+                <input type="text" id="ipt_email_edicao">
+            </div>
+            <div class="campo">
+                <p>Senha</p>
+                <input type="text" id="ipt_senha_edicao">
+            </div>
+            <div class="campo">
+                <p>Data de nascimento</p>
+                <input type="date" id="ipt_dtNasc_edicao">
+            </div>
+            <div class="campo">
+                <p>Administrador</p>
+                <input type="checkbox" id="ipt_adm_edicao">
+            </div>
+            <div class="erro">
+                <p id="erro_edicao"></p>
+            </div>
+            <button onclick="editarUsuario()">Editar</button>
+        </div>
+    </div>
+
+
+
+    <div class="barra_lateral">
         <div class="option">
             <i class="fa-solid fa-chart-simple"></i>
-            <p><a href="dashboard_usuarios.html">Dashboard</a></p>
+            <p><a href="dashboard_usuarios.html">Estatísticas de usuários</a></p>
+        </div>
+        <div class="option">
+            <i class="fa-solid fa-chart-simple"></i>
+            <p><a href="dashboard_postagens.html">Estatísticas de postagens</a></p>
         </div>
         <div class="option">
             <i class="fa-solid fa-user"></i>
@@ -100,8 +104,12 @@
             <p><a href="postagens.html">Postagens</a></p>
         </div>
         <div class="option">
+            <i class="fa-solid fa-chart-simple"></i>
+            <p><a href="../home.html">Voltar para o blog</a></p>
+        </div>
+        <div class="option">
             <i class="fa-solid fa-right-to-bracket"></i>
-            <p onclick="deslogar()">Sair</p>
+            <p onclick="deslogar()">Deslogar</p>
         </div>
     </div>
     <div class="container">
@@ -150,7 +158,7 @@
                             <td>${dados[i].nome}</td>
                             <td>${dados[i].email}</td>
                             <td>*****</td>
-                            <td><i class="fa-solid fa-pencil" onclick=exibirModalEditarUsuario(${JSON.stringify(dados[i])})></i></td>
+                            <td><i class="fa-solid fa-pencil" onclick=exibirModalEditarUsuario(${dados[i].id})></i></td>
                             <td><i onclick=deletarUsuario(${dados[i].id}) class="fa-solid fa-trash"></i></td>
                             `;
                         }
@@ -179,7 +187,7 @@
 
     }
 
-    function exibirModalEditarUsuario(dadosUsuario) {
+    function exibirModalEditarUsuario(idUsuario) {
         const div_modal = document.getElementById("modal-container-criacao-usuario");
         // modal de criação
         const div_modal_criarUsuario = document.getElementById("modalCriarUsuario");
@@ -191,12 +199,12 @@
 
         div_modal.style.display = "flex";
 
-        idUsuario = dadosUsuario.id;
-        plotarDados(dadosUsuario);
+
+        plotarDados(idUsuario);
 
     }
 
- 
+
 
     function fecharModalCriacaoUsuario() {
         const div_modal = document.getElementById("modal-container-criacao-usuario");
@@ -206,21 +214,21 @@
     }
 
 
-   
+
 
     function deletarUsuario(id) {
         fetch(`/usuarios/excluir/${id}`, {
             method: "DELETE"
         })
-        .then((resposta) => {
-            if (resposta.status == 200) {
-                alert("Exclusão feita com sucesso.");
-                window.location.reload();
-            }
-        })
-        .catch((erro) => {
-            console.log(erro);
-        })
+            .then((resposta) => {
+                if (resposta.status == 200) {
+                    alert("Exclusão feita com sucesso.");
+                    window.location.reload();
+                }
+            })
+            .catch((erro) => {
+                console.log(erro);
+            })
 
     }
 
@@ -234,53 +242,67 @@
             erro.style.display = "block";
             erro.innerHTML = "Preencha todos os campos antes de continuar!";
         } else {
-           // fetch para criação de usuário
-           fetch("/usuarios/cadastrar", {
+            // fetch para criação de usuário
+            fetch("/usuarios/cadastrar", {
                 method: "POST",
                 headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                nomeServer: nome,
-                emailServer: email,
-                senhaServer: senha,
-                dtNascServer: dtNasc,
-                isADMServer: chkBoxAdm
-            })
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    nomeServer: nome,
+                    emailServer: email,
+                    senhaServer: senha,
+                    dtNascServer: dtNasc,
+                    isADMServer: chkBoxAdm
+                })
             }).then(function (resposta) {
-               if (resposta.status == 400) {
-                alert("E-mail já em uso, tente novamente.")
-               } else if (resposta.status == 200) {
-                alert("Cadastro feito com sucesso.");
-                window.location.reload();
-               }
+                if (resposta.status == 400) {
+                    alert("E-mail já em uso, tente novamente.")
+                } else if (resposta.status == 200) {
+                    alert("Cadastro feito com sucesso.");
+                    window.location.reload();
+                }
             }).catch(function (erro) {
-               console.log(erro);
+                console.log(erro);
             })
         }
     }
 
-    function plotarDados(dadosUsuario) {
-        // console.log(dadosUsuario.admin.data[0])
-        ipt_nome_edicao.value = dadosUsuario.nome;
-        ipt_email_edicao.value = dadosUsuario.email;
-        ipt_senha_edicao.value = dadosUsuario.senha;
-        const dataFormatada = dadosUsuario.dtNasc.split("T")[0];
-        ipt_dtNasc_edicao.value = dataFormatada;
-        // console.log(dadosUsuario.dtNasc)
-        console.log(dadosUsuario.admin.data[0])
-        if (dadosUsuario.admin.data[0] == 0) {
-            ipt_adm_edicao.checked = false;
-        } else {
-            ipt_adm_edicao.checked = true;
-        }
+    function plotarDados(idUsuario) {
+        fetch(`/usuarios/${idUsuario}`)
+            .then((resposta) => {
+                resposta.json()
+                    .then((usuario) => {
+                        var dadosUsuario = usuario[0];
+                        // console.log(dadosUsuario.admin.data[0])
+                        ipt_nome_edicao.value = dadosUsuario.nome;
+                        ipt_email_edicao.value = dadosUsuario.email;
+                        ipt_senha_edicao.value = dadosUsuario.senha;
+                        const dataFormatada = dadosUsuario.dtNasc.split("T")[0];
+                        ipt_dtNasc_edicao.value = dataFormatada;
+                        // console.log(dadosUsuario.dtNasc)
+                        console.log(dadosUsuario.admin.data[0])
+                        if (dadosUsuario.admin.data[0] == 0) {
+                            ipt_adm_edicao.checked = false;
+                        } else {
+                            ipt_adm_edicao.checked = true;
+                        }
 
-             
+                    })
+                    .catch(erro => {
+                        console.log(erro)
+                    })
+            })
+            .catch((erro) => {
+                console.log(erro)
+            })
+
+
 
     }
 
-   function editarUsuario() {
-       var nome = ipt_nome_edicao.value;
+    function editarUsuario() {
+        var nome = ipt_nome_edicao.value;
         var email = ipt_email_edicao.value;
         var senha = ipt_senha_edicao.value;
         var dtNasc = ipt_dtNasc_edicao.value;
@@ -289,31 +311,31 @@
             erro_edicao.style.display = "block";
             erro_edicao.innerHTML = "Preencha todos os campos antes de continuar!";
         } else {
-           // fetch para criação de usuário
-           fetch("/usuarios/editar", {
+            // fetch para criação de usuário
+            fetch("/usuarios/editar", {
                 method: "PUT",
                 headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                idServer: idUsuario,
-                nomeServer: nome,
-                emailServer: email,
-                senhaServer: senha,
-                dtNascServer: dtNasc,
-                isADMServer: chkBoxAdm
-            })
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idServer: idUsuario,
+                    nomeServer: nome,
+                    emailServer: email,
+                    senhaServer: senha,
+                    dtNascServer: dtNasc,
+                    isADMServer: chkBoxAdm
+                })
             }).then(function (resposta) {
-                 if (resposta.status == 200) {
-                console.log("oi")
-                alert("Dados alterados com sucesso.");
-                idUsuario = 0;
-                window.location.reload();
-               } else {
-                console.log(resposta)
-               }
+                if (resposta.status == 200) {
+                    console.log("oi")
+                    alert("Dados alterados com sucesso.");
+                    idUsuario = 0;
+                    window.location.reload();
+                } else {
+                    console.log(resposta)
+                }
             }).catch(function (erro) {
-               console.log(erro);
+                console.log(erro);
             })
         }
     }

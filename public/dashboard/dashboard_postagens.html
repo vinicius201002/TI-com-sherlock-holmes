@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../styles/dashboard_postagens.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="/scripts/sessao.js"></script>
+
+</head>
+
+<body>
+  <div class="barra_lateral">
+    <div class="option">
+      <i class="fa-solid fa-chart-simple"></i>
+      <p><a href="dashboard_usuarios.html">Estatísticas de usuários</a></p>
+    </div>
+    <div class="option">
+      <i class="fa-solid fa-chart-simple"></i>
+      <p><a href="dashboard_postagens.html">Estatísticas de postagens</a></p>
+    </div>
+    <div class="option">
+      <i class="fa-solid fa-user"></i>
+      <p><a href="usuarios.html">Usuários</a></p>
+    </div>
+    <div class="option">
+      <i class="fa-solid fa-book"></i>
+      <p><a href="postagens.html">Postagens</a></p>
+    </div>
+    <div class="option">
+      <i class="fa-solid fa-chart-simple"></i>
+      <p><a href="../home.html">Voltar para o blog</a></p>
+    </div>
+    <div class="option">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      <p onclick="deslogar()">Deslogar</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="filtros">
+      <div class="filtro">
+        <p id="valor-kpi-2">
+          Selecione a postagem
+        </p>
+        <select onchange="atualizarInformacoes(this.options[this.selectedIndex].value)" id="slt_postagens">
+
+        </select>
+      </div>
+    </div>
+    <div class="grafico ">
+      <div class="chart interacoes-tempo">
+        <canvas id="chartInteracao"></canvas>
+      </div>
+      <div class="grafico">
+        <div id="ultimos_comentarios" class="chart inativos">
+          <h3>Últimos comentários</h3>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  carregarPostagens();
+
+  function atualizarInformacoes(idPostagem) {
+    console.log(idPostagem)
+   atualizarGrafico(idPostagem);
+     carregarComentarios(idPostagem)
+  }
+
+
+  // configuração dos gráficos
+  var canva_chartInteracao = document.getElementById("chartInteracao");
+  var grafico_interacaoPostagem = new Chart(canva_chartInteracao, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Visualizações',
+        data: []
+      },
+      {
+        label: 'Comentários',
+        data: []
+      },
+      {
+        label: 'Curtidas',
+        data: []
+      }
+      ]
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Interações na postagem por dia',
+          font: {
+            size: 20
+          },
+          align: 'center'
+        },
+      }
+
+    }
+  });
+
+
+  function carregarPostagens() {
+    fetch(`/postagens/listar`, {
+      method: "GET"
+    })
+      .then((resposta) => {
+        if (resposta.ok) {
+          resposta.json()
+            .then((postagens => {
+              var select_postagens = document.getElementById("slt_postagens");
+
+              for (var i = 0; i < postagens.length; i++) {
+                select_postagens.innerHTML += `<option value=${postagens[i].id}>${postagens[i].titulo}</option>`;
+              }
+            }))
+            .catch((erro) => {
+              console.log(erro);
+            })
+        }
+      })
+      .catch((erro) => {
+        console.log(erro);
+      })
+  }
+
+  function carregarComentarios(idPostagem) {
+    fetch(`/postagens/dashboard/ultimosComentarios/${idPostagem}`)
+      .then((resposta) => {
+        if (resposta.ok) {
+          resposta.json()
+            .then((comentarios) => {
+              var div_ultimos_comentarios = document.getElementById("ultimos_comentarios");
+              var mensagem = `<h3>Últimos comentários</h3><ul>`;
+              for (var i = 0; i < comentarios.length; i++) {
+                mensagem += `<li>${comentarios[i].nome} comentou: ${comentarios[i].corpo} (${formatarData(comentarios[i].dataHora)})</li>`
+              }
+              mensagem += `</ul>`;
+              div_ultimos_comentarios.innerHTML = mensagem;
+            })
+            .catch((erro) => {
+              console.log(erro)
+            })
+        }
+      })
+      .catch((erro) => {
+        console.log(erro);
+      })
+  }
+
+  function atualizarGrafico(idPostagem) {
+    fetch(`/postagens/dashboard/postagensMaisEngajadas/${idPostagem}`, {
+      method: "GET"
+    })
+      .then((resposta) => {
+        if (resposta.ok) {
+          resposta.json()
+            .then((dados => {
+              // populando os dados com essa informação
+              var labels = [];
+              var qtdComentarios = [];
+              var qtdVisualizacoes = [];
+              var qtdCurtidas = [];
+              console.log(dados[0].quantidade_comentarios)
+              console.log(dados[0].quantidade_curtidas)
+              console.log(dados[0].quantidade_visualizacoes)
+
+              for (var i = 0; i < dados.length; i++) {
+                // preenchendo labels
+                var dataAtual = dados[i].data;
+                labels.push(dataAtual);
+                // Capturando as interações
+                // comentários
+                var qtdComentarioAtual = dados[i].quantidade_comentarios;
+                qtdComentarios.push(qtdComentarioAtual);
+                // curtidas 
+                var qtdCurtidaAtual = dados[i].quantidade_curtidas;
+                qtdCurtidas.push(qtdCurtidaAtual);
+                // visualizações
+                var qtdVisualizacaoAtual = dados[i].quantidade_visualizacoes;
+                qtdVisualizacoes.push(qtdVisualizacaoAtual);
+              }
+              console.log(qtdCurtidas)
+
+              //  atualizando grafico
+              grafico_interacaoPostagem.data.labels = labels;
+              //  // o indice 0 é o vetor das visualizações, como defini na váriavel de configuração do gráfico
+              grafico_interacaoPostagem.data.datasets[0].data = qtdVisualizacoes;
+              grafico_interacaoPostagem.data.datasets[1].data = qtdComentarios;
+              grafico_interacaoPostagem.data.datasets[2].data = qtdCurtidas;
+
+              grafico_interacaoPostagem.update();
+            }))
+            .catch((erro) => {
+              console.log(erro);
+            })
+        }
+      })
+      .catch((erro) => {
+        console.log(erro);
+      })
+  }
+
+  function formatarData(dataHora) {
+    const meses = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+
+    const data = new Date(dataHora);
+
+    const dia = data.getDate();
+    const mes = meses[data.getMonth()];
+    const horas = String(data.getHours()).padStart(2, '0');
+    const minutos = String(data.getMinutes()).padStart(2, '0');
+    const segundos = String(data.getSeconds()).padStart(2, '0');
+
+    return `${dia} de ${mes} às ${horas}:${minutos}:${segundos}`;
+  } 
+</script>
