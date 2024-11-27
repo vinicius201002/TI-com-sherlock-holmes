@@ -15,6 +15,8 @@ router.get("/:idPostagem/:idUsuario", function (req, res) {
     curtidaController.listarCurtidaNaPostagem(req, res);
 })
 
+
+
 router.get("/:idPostagem", function(req, res) {
     curtidaController.listarCurtidasNaPostagem(req, res);
 });

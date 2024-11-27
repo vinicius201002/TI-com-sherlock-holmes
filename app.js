@@ -22,6 +22,7 @@ var acessoRouter = require("./src/routes/acessos");
 var postagemRouter = require("./src/routes/postagens");
 var curtidasRouter = require("./src/routes/curtidas");
 var visualizazaoRouter = require("./src/routes/visualizacao");
+var dashboardRouter = require("./src/routes/dashboard")
 var comentarioRouter = require("./src/routes/comentarios");
 
 
@@ -44,6 +45,7 @@ app.use("/postagens", postagemRouter);
 app.use("/curtidas", curtidasRouter);
  app.use("/visualizacoes", visualizazaoRouter);
  app.use("/comentarios", comentarioRouter);
+ app.use("/dashboard", dashboardRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

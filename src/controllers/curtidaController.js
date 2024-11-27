@@ -91,9 +91,38 @@ function deletarCurtida(req, res) {
     }
 }
 
+
+function listarAgrupadoPorData(req, res) {
+    var idPostagem = req.params.idPostagem;
+
+
+    // validação do corpo
+    if (idPostagem == undefined) {
+        res.status(400).send("Seu id_postagem está undefined")
+    } else {
+        curtidaModel.listarPorData(idPostagem)
+            .then((resultado) => {
+                if (resultado.length > 0) {
+
+                    res.status(200).json(resultado)
+                } else {
+                    res.status(204).send()
+                }
+            })
+            .catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o cadastro do acesso! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            )
+    }
+}
+
 module.exports = {
     cadastrarCurtida,
     listarCurtidaNaPostagem,
     listarCurtidasNaPostagem,
-    deletarCurtida
+    deletarCurtida,
+    listarAgrupadoPorData
 }
