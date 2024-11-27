@@ -186,7 +186,21 @@ function listarTotalAcessos(req, res) {
 }
 
 function listarUsuariosInativos(req, res) {
-    usuarioModel.listarUsuariosInativos()
+    var dtInicio = req.params.dtInicio;
+    var dtFim = req.params.dtFim;
+
+        usuarioModel.listarUsuariosInativos(dtInicio, dtFim)
+        .then((resposta) => {
+            res.status(200).json(resposta);
+        })
+        .catch((erro) => {
+            res.status(500).json(erro.sqlMessage)
+        })
+   
+}
+
+function listarFaixasEtarias(req, res) {
+    usuarioModel.listarFaixasEtarias()
     .then((resposta) => {
         res.status(200).json(resposta);
     })
@@ -195,6 +209,33 @@ function listarUsuariosInativos(req, res) {
     })
 }
 
+function listarAcessosPorDia(req, res) {
+    var dtInicio = req.params.dtInicio;
+    var dtFim = req.params.dtFim;
+
+    usuarioModel.listarAcessosPorDia(dtInicio, dtFim)
+    .then((resposta) => {
+        res.status(200).json(resposta);
+    })
+    .catch((erro) => {
+        res.status(500).json(erro.sqlMessage)
+    })
+}
+
+function listarUsuariosComMaisInteracoes(req, res) {
+    var dtInicio = req.params.dtInicio;
+    var dtFim = req.params.dtFim;
+
+    
+    usuarioModel.listarUsuariosComMaisInteracoes(dtInicio, dtFim)
+    .then((resposta) => {
+        res.status(200).json(resposta);
+    })
+    .catch((erro) => {
+        res.status(500).json(erro.sqlMessage)
+    })
+
+}
 
 module.exports = {
     autenticar,
@@ -205,5 +246,8 @@ module.exports = {
     listarUsuariosComMaisAcessos,
     listarTotalUsuarios,
     listarTotalAcessos,
-    listarUsuariosInativos
+    listarUsuariosInativos,
+    listarFaixasEtarias,
+    listarAcessosPorDia,
+    listarUsuariosComMaisInteracoes
 }

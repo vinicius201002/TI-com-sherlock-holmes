@@ -2,195 +2,317 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../styles/dashboard.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script src="/scripts/sessao.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../styles/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="/scripts/sessao.js"></script>
 
 </head>
 
 <body>
-    <div class="barra_lateral">
-        <div class="option">
-            <i class="fa-solid fa-chart-simple"></i>
-            <p><a href="dashboard_usuarios.html">Dashboard</a></p>
-        </div>
-        <div class="option">
-            <i class="fa-solid fa-user"></i>
-            <p><a href="usuarios.html">Usuários</a></p>
-        </div>
-        <div class="option">
-            <i class="fa-solid fa-book"></i>
-            <p><a href="postagens.html">Postagens</a></p>
-        </div>
-        <div class="option">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            <p onclick="deslogar()">Sair</p>
-        </div>
+  <div class="barra_lateral">
+
+
+    <div class="option">
+      <i class="fa-solid fa-chart-simple"></i>
+      <p><a href="dashboard_usuarios.html">Dashboard</a></p>
     </div>
-    <div class="container">
-        <div class="kpis">
-            <div class="kpi">
-                <p id="valor-kpi-1">
-                    4
-                </p>
-                <p class="titulo-kpi">Usuários cadastrados</p>
-            </div>
-            <div class="kpi">
-                <p id="valor-kpi-2">
-                    1500
-                </p>
-                <p class="titulo-kpi">Acessos no site</p>
-            </div>
-        </div>
-        <div class="dashboard-grid">
-            <!-- Linha de Gráficos -->
-            <div class="chart idade-media">
-              <h3>Idade Média dos Usuários</h3>
-              <!-- Gráfico de barras -->
-              <canvas id="chartIdadeMedia"></canvas>
-            </div>
-            <div class="chart acessos-por-dia">
-              <h3>Acessos por Dia</h3>
-              <!-- Gráfico de barras -->
-              <canvas id="chartAcessosPorDia"></canvas>
-            </div>
-        
-            <!-- Linha de Listas -->
-            <div id="top-acessos" class="chart top-acessos">
-            </div>
-            <div id="top-interacoes" class="chart maior-engajamento">
-              <h3>Usuário com Maior Engajamento</h3>
-              <p><strong>Usuário 4</strong>: 120 interações (comentários, curtidas)</p>
-            </div>
-            <div id="usuarios-inativos" class="chart inativos">
-              <h3>Usuários Inativos</h3>
-              <ol>
-                <li>Usuário 5 - Último acesso: 2024-01-01</li>
-                <li>Usuário 6 - Último acesso: 2024-01-10</li>
-                <li>Usuário 7 - Último acesso: 2024-02-15</li>
-              </ol>
-            </div>
-          </div>
+    <div class="option">
+      <i class="fa-solid fa-user"></i>
+      <p><a href="usuarios.html">Usuários</a></p>
     </div>
+    <div class="option">
+      <i class="fa-solid fa-book"></i>
+      <p><a href="postagens.html">Postagens</a></p>
+    </div>
+    <div class="option">
+      <i class="fa-solid fa-chart-simple"></i>
+      <p><a href="../home.html">Voltar para o blog</a></p>
+    </div>
+    <div class="option">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      <p onclick="deslogar()">Deslogar</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="filtros">
+      <div class="filtro">
+        <p id="valor-kpi-1">
+          Data de início
+        </p>
+        <input id="ipt_data_inicio" type="date">
+      </div>
+      <div class="filtro">
+        <p id="valor-kpi-2">
+          Data de fim
+        </p>
+        <input id="ipt_data_fim" type="date">
+      </div>
+      <button onclick="aplicarFiltro()">Aplicar filtro</button>
+    </div>
+    <div class="dashboard-grid">
+      <!-- Linha de Gráficos -->
+      <div class="chart idade-media">
+        <!-- Gráfico de barras -->
+        <canvas id="chartFaixaEtaria"></canvas>
+      </div>
+      <div class="chart acessos-por-dia">
+        <!-- Gráfico de barras -->
+        <canvas id="chartAcessoPorDia"></canvas>
+      </div>
+
+      <div id="usuarios-mais-interativos" class="chart maior-engajamento">
+        <h3>Usuário com Maior Engajamento</h3>
+        <p><strong>Usuário 4</strong>: 120 interações (comentários, curtidas)</p>
+      </div>
+      <div id="usuarios-inativos" class="chart inativos">
+        <h3>Usuários Inativos</h3>
+        <ol>
+          <li>Usuário 5 - Último acesso: 2024-01-01</li>
+          <li>Usuário 6 - Último acesso: 2024-01-10</li>
+          <li>Usuário 7 - Último acesso: 2024-02-15</li>
+        </ol>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-  listarUsuariosComMaisAcessos();
-  listarTotalUsuarios()
-  listarTotalAcessos();
+  // Chamada de todos os dados que popularão os gráficos
   listarUsuariosInativos();
+  listarFaixasEtarias();
+  listarAcessosPorDia();
+  listarUsuarioMaisInterativos();
 
-    
-    function deslogar() {
-        sessionStorage.clear();
-        window.location.reload();
+  //Configuração inicial de todos os gráficos
+  var canva_chartFaixaEtaria = document.getElementById("chartFaixaEtaria");
+  var canva_chartAcessoPorDia = document.getElementById("chartAcessoPorDia")
+  var grafico_FaixaEtaria = new Chart(canva_chartFaixaEtaria, {
+    type: 'pie',
+    data: {
+      labels: [
+      ],
+      datasets: [{
+        label: 'Quantidade',
+        data: [],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgb(102, 204, 0)'
+        ]
+      }]
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Faixa etária dos usuários',
+          font: {
+            size: 20
+          },
+          align: 'center'
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false,
     }
+  });
+  var grafico_AcessoPorDia = new Chart(canva_chartAcessoPorDia, {
+    type: 'line',
+    data: {
+      labels: [
+      ],
+      datasets: [{
+        label: 'Quantidade',
+        data: [],
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1,
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgb(102, 204, 0)'
+        ]
+      }]
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Acessos (Login) por dia',
+          font: {
+            size: 20
+          },
+          align: 'center'
+        }
+      }
+    }
+  });
 
-    function listarUsuariosComMaisAcessos() {
-      fetch(`/usuarios/usuariosMaisAcessos`, {
-        method: "GET"
-      })
+
+  function deslogar() {
+    sessionStorage.clear();
+    window.location.reload();
+  }
+
+
+  function listarUsuariosInativos(dataInicio, dataFim) {
+    fetch(`/usuarios/usuariosInativos/${dataInicio}/${dataFim}`, {
+      method: "GET"
+    })
       .then((resposta) => {
         if (resposta.ok) {
           resposta.json()
-          .then((dados) => {
-            var div_top_acessos = document.getElementById("top-acessos");
-            var mensagem = "<h3>Usuários que Mais Acessam</h3><ul>";
-            for (var i = 0; i < 2; i++) {
-              mensagem += `<li><b>${i + 1}. ${dados[i].nome}</b>: ${dados[i].qtdAcesso} acessos</li>`;
-            }
-            mensagem += `</ul>`
-            div_top_acessos.innerHTML = mensagem;
-          })
-          .catch((erro) => {
-            console.log("Erro ao converter o JSON", erro)
-          })
+            .then((dados) => {
+              var div_top_acessos = document.getElementById("usuarios-inativos");
+              var mensagem = "<h3>Usuários mais inativos</h3><ul>";
+              for (var i = 0; i < dados.length; i++) {
+                mensagem += `<li><b>${i + 1}. ${dados[i].nome}</b> - Último acesso: ${formatarData(dados[i].ultimo_acesso)}</li>`;
+              }
+              mensagem += `</ul>`
+              div_top_acessos.innerHTML = mensagem;
+            })
+            .catch((erro) => {
+              console.log("Erro ao converter o JSON", erro)
+            })
         }
       })
       .catch((erro) => {
         console.log(erro);
       })
-    }
+  }
 
-    function listarTotalUsuarios() {
-      fetch(`/usuarios/totalUsuarios`, {
-        method: "GET"
-      })
+  function listarFaixasEtarias() {
+    fetch(`/usuarios/faixasEtarias`, {
+      method: "GET"
+    })
       .then((resposta) => {
         if (resposta.ok) {
           resposta.json()
-          .then((dados) => {
-            var div_kpi_total_usuarios = document.getElementById("valor-kpi-1");
-          div_kpi_total_usuarios.innerHTML = dados[0].qtd_usuarios;
-          })
-          .catch((erro) => {
-            console.log("Erro ao converter o JSON", erro)
-          })
+            .then((dados) => {
+              console.log(dados)
+              // Populando gráfico
+              var dadosDoGrafico = [];
+              var labelsDoGrafico = [];
+              for (var i = 0; i < dados.length; i++) {
+                var quantidadeAtual = dados[i].quantidade;
+                var labelAtual = dados[i].faixa_etaria;
+                dadosDoGrafico.push(quantidadeAtual);
+                labelsDoGrafico.push(labelAtual)
+              }
+              grafico_FaixaEtaria.data.labels = labelsDoGrafico;
+              grafico_FaixaEtaria.data.datasets[0].data = dadosDoGrafico;
+              grafico_FaixaEtaria.update();
+            })
+            .catch((erro) => {
+              console.log("Erro ao converter o JSON", erro)
+            })
         }
       })
       .catch((erro) => {
         console.log(erro);
       })
-    }
+  }
 
-    function listarTotalAcessos() {
-      fetch(`/usuarios/totalAcessos`, {
-        method: "GET"
-      })
+  function listarAcessosPorDia(dataInicio, dataFim) {
+    fetch(`/usuarios/AcessoPorDia/${dataInicio}/${dataFim}`, {
+      method: "GET"
+    })
       .then((resposta) => {
         if (resposta.ok) {
           resposta.json()
-          .then((dados) => {
-            var div_kpi_total_acessos = document.getElementById("valor-kpi-2");
-          div_kpi_total_acessos.innerHTML = dados[0].qtd_acessos;
-          })
-          .catch((erro) => {
-            console.log("Erro ao converter o JSON", erro)
-          })
+            .then((dados) => {
+              console.log(dados)
+              // Populando gráfico
+              var dadosDoGrafico = [];
+              var labelsDoGrafico = [];
+              for (var i = 0; i < dados.length; i++) {
+                var quantidadeAtual = dados[i].quantidade;
+                var labelAtual = dados[i].dia;
+                dadosDoGrafico.push(quantidadeAtual);
+                labelsDoGrafico.push(labelAtual)
+              }
+              grafico_AcessoPorDia.data.labels = labelsDoGrafico;
+              grafico_AcessoPorDia.data.datasets[0].data = dadosDoGrafico;
+              grafico_AcessoPorDia.update();
+            })
+            .catch((erro) => {
+              console.log("Erro ao converter o JSON", erro)
+            })
         }
       })
       .catch((erro) => {
         console.log(erro);
       })
-    }
+  }
 
-    function listarUsuariosInativos() {
-      fetch(`/usuarios/usuariosInativos`, {
-        method: "GET"
-      })
+  function listarUsuarioMaisInterativos(dataInicio, dataFim) {
+    fetch(`/usuarios/usuariosMaisInterativos/${dataInicio}/${dataFim}`, {
+      method: "GET"
+    })
       .then((resposta) => {
         if (resposta.ok) {
           resposta.json()
-          .then((dados) => {
-            var div_top_acessos = document.getElementById("usuarios-inativos");
-            var mensagem = "<h3>Usuários mais inativos</h3><ul>";
-            for (var i = 0; i < 2; i++) {
-              mensagem += `<li><b>${i + 1}. ${dados[i].nome}</b> - Último acesso: ${formatarData(dados[i].ultimo_acesso)}</li>`;
-            }
-            mensagem += `</ul>`
-            div_top_acessos.innerHTML = mensagem;
-          })
-          .catch((erro) => {
-            console.log("Erro ao converter o JSON", erro)
-          })
+            .then((dados) => {
+              var div_top_interacoes = document.getElementById("usuarios-mais-interativos");
+              var mensagem = "<h3>Usuários mais interativos</h3><ul>";
+              for (var i = 0; i < dados.length; i++) {
+                //console.log(dados[i])
+                mensagem += `<li><b>${i + 1}. ${dados[i].usuario_nome}</b>: ${dados[i].total_interacoes} interações (${dados[i].quantidade_acessos} acessos, ${dados[i].quantidade_comentarios} comentários, ${dados[i].quantidade_curtidas} curtidas, ${dados[i].quantidade_visualizacoes} visualizações em postagens)</li>`;
+              }
+              mensagem += `</ul>`
+              div_top_interacoes.innerHTML = mensagem;
+            })
+            .catch((erro) => {
+              console.log("Erro ao converter o JSON", erro)
+            })
         }
       })
       .catch((erro) => {
         console.log(erro);
       })
-    }
-    
+  }
 
-   function formatarData(data) {
+
+  function aplicarFiltro() {
+    var dataInicio = ipt_data_inicio.value;
+    var dataFim = ipt_data_fim.value;
+
+    // validações
+    if (dataFim == "" || dataInicio == "") {
+      alert("Preencha ambas as datas")
+    } else if (dataInicio > dataFim) {
+      alert("A data de início não pode maior que a data final")
+    } else if (dataInicio == dataFim) {
+      alert("As datas não podem ser iguais.")
+    }
+    else {
+      // caso as datas sejam válidas, chamarei as funções de fetch, mas dessa vez enviando os parametros de data
+      listarAcessosPorDia(dataInicio, dataFim);
+      listarFaixasEtarias();
+      listarUsuarioMaisInterativos(dataInicio, dataFim);
+      listarUsuariosInativos(dataInicio, dataFim)
+    }
+  }
+
+
+
+  function formatarData(data) {
+    if (data == null) {
+      return "Nunca acessou o sistema."
+    }
     var novaData = new Date(data);
     return `${novaData.getDate()}/${novaData.getUTCMonth() + 1}/${novaData.getFullYear()} às ${novaData.getHours()}:${novaData.getMinutes()}:${novaData.getSeconds()}`
-  
 
-   }
+
+  }
 </script>
