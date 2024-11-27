@@ -11,12 +11,6 @@
 <body>
     <nav class="navbar">
         <img onclick="direcionarHome()" src="" alt="logo">
-        <div class="buscar">
-            <input placeholder="Pesquisar" type="text">
-            <button>
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </div>
         <ul id="opcoes" class="opcoes">
             <li><a href="minhaconta.html">Minha conta</a></li>
             <li><a href="sair()">Sair</a></li>
@@ -27,11 +21,8 @@
             <img src="assets/img/user.png">
 
             <div class="infos">
-                <p class="nome">Vinicius Oliveira</p>
-            <p>Cadastrado em: 20/10/2024</p>
-            <p>Quantidade de acessos: 222</p>
-            <p>Último acesso: 21/10/2024</p>
-            <a href="postagens_curtidas.html">Ver postagens curtidas</a>
+                <p class="nome" id="nome_user">Vinicius Oliveira</p>
+            <p id="cadastrado_em">Cadastrado em: 20/10/2024</p>
         </div>
         </div>
         <div class="form">
@@ -45,20 +36,86 @@
             </div>
             <div class="campo">
                 <p>Data de nascimento</p>
-                <input type="text" id="ipt_dtNasc">
+                <input type="date" id="ipt_dtNasc">
             </div>
             <div class="campo">
                 <p>Senha</p>
                 <input type="password" id="ipt_senha">
             </div>
-            <button>Editar</button>
+            <button onclick="editar()">Editar</button>
         </div>
     </div>
     
 </body>
 </html>
 <script>
+    buscarInformacoes(sessionStorage.id_usuario);
+
+    function buscarInformacoes(id) {
+        fetch(`/usuarios/porId/${id}`, {
+            method: "GET"
+        })
+        .then(resposta => {
+            resposta.json()
+            .then(resultado => {
+                var dadosUsuario = resultado[0];
+                ipt_nome.value = dadosUsuario.nome;
+                nome_user.innerHTML = dadosUsuario.nome;
+                ipt_email.value = dadosUsuario.email;
+                ipt_dtNasc.value = dadosUsuario.dtNasc.split("T")[0];
+                ipt_senha.value = dadosUsuario.senha;
+
+
+                var objDate = new Date(dadosUsuario.dtCriacao);
+                cadastrado_em.innerHTML = `Cadastrado em: ${objDate.getUTCDate()}/${objDate.getUTCMonth()}/${objDate.getUTCFullYear()}`;
+                qtd_acessos.innerHTML = `${dadosUsuario.acessos}`;
+            })
+            .catch(erro => {
+                console.log(erro);
+            })
+        })
+        .catch(erro => {
+            console.log(erro);
+        })
+    }
+
+
      function direcionarHome() {
         window.location.href = "/home.html";
+    }
+
+    function editar() {
+        var nome = ipt_nome.value;
+        var email = ipt_email.value;
+        var dtNasc = ipt_dtNasc.value;
+        var senha = ipt_senha.value;
+
+        if (nome != "" && email != "" && dtNasc != "" && senha != "") {
+            // executar instruçao de atualizar
+            fetch("/usuarios/editar", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idServer: sessionStorage.id_usuario,
+                    nomeServer: nome,
+                    emailServer: email,
+                    senhaServer: senha,
+                    dtNascServer: dtNasc
+                })
+            }).then(function (resposta) {
+                if (resposta.status == 200) {
+                    alert("Dados alterados com sucesso.");
+                    window.location.reload();
+                } else {
+                    console.log(resposta)
+                }
+            }).catch(function (erro) {
+                console.log(erro);
+            })
+        } else {
+            alert("Preencha todos os campos");
+        }
     }
 </script>

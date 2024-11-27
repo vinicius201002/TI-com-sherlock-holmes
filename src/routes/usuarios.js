@@ -20,7 +20,7 @@ router.get("/", function (req, res) {
     usuarioController.listarUsuarios(req, res);
 });
 
-router.get("/:id", (req, res) => {
+router.get("/porId/:id", (req, res) => {
     usuarioController.listarPorId(req, res);
 })
 
@@ -45,7 +45,7 @@ router.get("/usuariosInativos/:dtInicio/:dtFim", function (req, res) {
     usuarioController.listarUsuariosInativos(req, res);
 })
 
-router.get("/faixasEtarias/", function (req, res) {
+router.get("/dashboard/faixasEtarias/", function (req, res) {
     usuarioController.listarFaixasEtarias(req, res)
 })
 

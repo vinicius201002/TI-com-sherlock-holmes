@@ -111,7 +111,6 @@
         const callback = (entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-
             if (entry.target.id == "inicial") {
                 setTimeout(() => {
                     const infos = entry.target.querySelector('.infos');

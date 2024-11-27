@@ -117,7 +117,7 @@
             <div class="cabecalho">
                 <p>Usuários</p>
                 <div class="buscar">
-                    <button>Ver dashboard</button>
+                    <button onclick="verDashboard()">Ver dashboard</button>
                 </div>
                 <button onclick="exibirModalCriacaoUsuario()">Novo usuário</button>
             </div>
@@ -187,7 +187,7 @@
 
     }
 
-    function exibirModalEditarUsuario(idUsuario) {
+    function exibirModalEditarUsuario(id) {
         const div_modal = document.getElementById("modal-container-criacao-usuario");
         // modal de criação
         const div_modal_criarUsuario = document.getElementById("modalCriarUsuario");
@@ -198,6 +198,7 @@
 
 
         div_modal.style.display = "flex";
+        idUsuario = id;
 
 
         plotarDados(idUsuario);
@@ -269,7 +270,7 @@
     }
 
     function plotarDados(idUsuario) {
-        fetch(`/usuarios/${idUsuario}`)
+        fetch(`/usuarios/porId/${idUsuario}`)
             .then((resposta) => {
                 resposta.json()
                     .then((usuario) => {
@@ -345,4 +346,7 @@
         window.location.reload();
     }
 
+    function verDashboard() {
+        window.location.href = "dashboard_usuarios.html";
+    }
 </script>

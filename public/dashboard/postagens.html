@@ -45,7 +45,7 @@
             <div class="cabecalho">
                 <p>Postagem</p>
                 <div class="buscar">
-                    <button>Ver Dashboard</button>
+                    <button onclick="verDashboard()">Ver Dashboard</button>
                 </div>
                 <button onclick="abrirTelaCriacaoPostagem()">Nova postagem</button>
             </div>
@@ -123,5 +123,9 @@
         sessionStorage.clear();
         
         window.location.reload();
+    }
+
+    function verDashboard() {
+        window.location.href = "dashboard_postagens.html";
     }
 </script>

@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="/scripts/sessao.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
 </head>
 <body>
     <nav  class="navbar">
         <img onclick="direcionarHome()" src="" alt="logo">
-        <div class="buscar">
-            <input placeholder="Pesquisar" type="text">
-            <button>
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </div>
         <ul id="opcoes" class="opcoes">
             <li><a href="minhaconta.html">Minha conta</a></li>
             <li onclick="deslogar()"><a>Sair</a></li>
@@ -24,8 +24,15 @@
     </nav>
     <main>
         <div class="titulo">
-            <h1>BEM VINDO À BAKER STREET, 221B!</h1>
-            <h1>CONFIRA NOSSAS MONOGRAFIAS</h1>
+            <div>
+                <h1>BEM VINDO À BAKER STREET, 221B!</h1>
+                <h1>CONFIRA NOSSAS MONOGRAFIAS</h1>
+            </div>
+            <div class="icons">
+                <i onclick="mudarExibicao('linha')" class="fa-solid fa-bars"></i>
+                <i onclick="mudarExibicao('coluna')" class="fa-solid fa-table-columns"></i>
+
+            </div>
         </div>
         <div id="cards" class="cards">
             
@@ -45,7 +52,7 @@
                 var mensagem = "";
                 for (var i = 0; i < resposta.length; i++) {
                     mensagem += `
-                <div onclick="irAoArtigo(${resposta[i].id})" class="card">
+                <div onclick="irAoArtigo(${resposta[i].id})" class="card coluna">
                 <div style="background-image: url('${resposta[i].imagem}')" class="imagem"></div>
                 <div class="infos">
                 <p class="titulo-postagem">${resposta[i].titulo}</p>
@@ -95,5 +102,25 @@ function formatarData(dateTime) {
     const ano = data.getFullYear();
 
     return `${dia}/${mes}/${ano}`;
+}
+
+function mudarExibicao(formato) {
+    var elementos = document.getElementsByClassName("card");
+    if (formato == "linha") {
+        // se o formato for linha, devemos exibir todos os elementos com a classe card e atribuir a eles a classe linha
+        for (var i = 0; i < elementos.length; i++) {
+           var elementoAtual = elementos[i];
+           elementoAtual.classList.add("linha");
+           elementoAtual.classList.remove("coluna");
+        }
+       
+    } else {
+        for (var i = 0; i < elementos.length; i++) {
+            var elementoAtual = elementos[i];
+            elementoAtual.classList.remove("linha");
+           elementoAtual.classList.add("coluna");
+     
+        }
+    }
 }
 </script>
