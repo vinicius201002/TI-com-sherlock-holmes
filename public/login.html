@@ -59,14 +59,18 @@
                         // Definindo controle de adm
                         if (dadosUsuario.admin.data[0] == 1) {
                             sessionStorage.setItem("adm", true);
+                        } else {
+                            sessionStorage.setItem("adm", false);
                         }
                         //window.location.href = "home.html"
                         
                     }).catch((erro) => {
                         console.log("Erro ao recuperar JSON da resposta: ", erro)
                     })
+                } else if (resposta.status == 403) {
+                    alert("Usuário ou senha inválidos")
                 } else {
-                    alert("Erro no login")
+                    alert("Erro no login");
                 }
 
             }).catch(function (erro) {
@@ -86,8 +90,7 @@
 
     function mostrarSenha() {
         p_mostrar_senha.innerHTML = (p_mostrar_senha.innerHTML == "Mostrar" ? "Esconder":"Mostrar");
-        input_senha.type = (p_mostrar_senha.innerHTML == "Mostrar" ? "password":"text");
-        
+        input_senha.type = (p_mostrar_senha.innerHTML == "Mostrar" ? "password":"text"); 
     }
 
     function cadastrarAcesso(idUsuario) {

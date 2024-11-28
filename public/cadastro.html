@@ -28,14 +28,13 @@
                 <div class="campo">
                     <div class="senha">
                         <p>Senha</p>
-                        <p>Mostrar</p>
+                        <p id="mostrarSenha" onclick="mostrarSenha()">Mostrar</p>
                     </div>
                     <input type="password" id="ipt_senha">
                 </div>
                 <div class="campo">
                     <div class="senha">
                         <p>Confirme a senha</p>
-                        <p>Mostrar</p>
                     </div>
                     <input type="password" id="ipt_confirmar_senha">
                 </div>
@@ -49,40 +48,59 @@
 
 </html>
 <script>
-   function cadastrar() {
-    var nome = ipt_nome.value;
-    var email = ipt_email.value;
-    var senha = ipt_senha.value;
-    var dt_nasc = ipt_dt_nasc.value;
+    function cadastrar() {
+        var nome = ipt_nome.value;
+        var email = ipt_email.value;
+        var senha = ipt_senha.value;
+        var confirmacacaoSenha = ipt_confirmar_senha.value;
+        var dt_nasc = ipt_dt_nasc.value;
 
 
+        // validações
+        if (!email.includes('@')) {
+            alert("E-mail precisa ter @");
+            return;
+        } else if ((senha != confirmacacaoSenha)) {
+            alert("A confirmação de senha está diferente da senha original!");
+            return;
+        } else  {
+            if (email != "" && senha != "" && nome != "" && dt_nasc != "") {
 
-        if (email != "" && senha != "" && nome != "" && dt_nasc != "") {
+                fetch("/usuarios/cadastrar", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        nomeServer: nome,
+                        emailServer: email,
+                        senhaServer: senha,
+                        dtNascServer: dt_nasc
+                    })
+                }).then(function (resposta) {
+                    if (resposta.status == 400) {
+                        alert("E-mail já em uso, tente novamente.")
+                    } else if (resposta.status == 200) {
+                        alert("Cadastro feito com sucesso.");
+                        window.location.href = "login.html";
+                    }
+                }).catch(function (erro) {
+                    console.log(erro);
+                })
 
-            fetch("/usuarios/cadastrar", {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                nomeServer: nome,
-                emailServer: email,
-                senhaServer: senha,
-                dtNascServer: dt_nasc
-            })
-            }).then(function (resposta) {
-               if (resposta.status == 400) {
-                alert("E-mail já em uso, tente novamente.")
-               } else if (resposta.status == 200) {
-                alert("Cadastro feito com sucesso.");
-                window.location.href = "login.html";
-               }
-            }).catch(function (erro) {
-               console.log(erro);
-            })
+            } else {
+                alert("Preencha todos os campos")
+            }
 
-        } else {
-            alert("Preencha todos os campos")
         }
-   }
+
+
+    }
+
+    function mostrarSenha() {
+        var p_mostrar_senha = document.getElementById("mostrarSenha");
+        p_mostrar_senha.innerHTML = (p_mostrar_senha.innerHTML == "Mostrar" ? "Esconder":"Mostrar");
+        ipt_senha.type = (p_mostrar_senha.innerHTML == "Mostrar" ? "password":"text"); 
+        ipt_confirmar_senha.type = (p_mostrar_senha.innerHTML == "Mostrar" ? "password":"text"); 
+    }
 </script>
