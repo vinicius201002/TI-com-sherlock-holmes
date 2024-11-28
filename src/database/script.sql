@@ -72,17 +72,17 @@ CREATE TABLE IF NOT EXISTS visualizacao (
 
 
 INSERT INTO usuario (nome, email, senha, dtNasc, admin) VALUES 
-('John Doe', 'johndoe@example.com', 'senha123', '1990-05-15', 0),
-('Jane Smith', 'janesmith@example.com', 'senha456', '1992-08-20', 0),
-('Carlos Silva', 'carlos.silva@example.com', 'senha789', '1985-03-10', 0),
-('Alice Souza', 'alice.souza@example.com', 'senha321', '2000-12-05', 0),
+('João Luz', 'joaoluz@email.com', 'senha123', '1990-05-15', 0),
+('Joelma Mattos', 'joelmamattos@email.com', 'senha456', '1992-08-20', 0),
+('Carlos Silva', 'carlos.silva@email.com', 'senha789', '1985-03-10', 0),
+('Alice Souza', 'alice.souza@email.com', 'senha321', '2000-12-05', 0),
 ('Admin User', 'admin@admin.com', 'admin', '1980-01-01', 1),
-('Bruno Almeida', 'bruno.almeida@example.com', 'bruno123', '1993-04-15', 0),
-('Carla Mendes', 'carla.mendes@example.com', 'carla456', '1995-07-22', 0),
-('Diego Costa', 'diego.costa@example.com', 'diego789', '1990-11-08', 0);
+('Bruno Almeida', 'bruno.almeida@email.com', 'bruno123', '1993-04-15', 0),
+('Carla Mendes', 'carla.mendes@email.com', 'carla456', '1995-07-22', 0),
+('Diego Costa', 'diego.costa@email.com', 'diego789', '1990-11-08', 0);
 
 INSERT INTO postagem (titulo, corpo, imagem, fkUsuario) VALUES 
-('A Dedução da Verdade: Um Estudo Minucioso sobre MySQL', 
+('A Dedução da Verdade: Um Estudo sobre MySQL', 
  'O MySQL, assim como a arte da dedução, é uma ferramenta poderosa para organizar o caos e revelar padrões escondidos. Elementar, meu caro leitor, ao adentrarmos o universo da tecnologia, encontramos os bancos de dados como repositórios organizados de conhecimento digital. Entre eles, o MySQL se destaca por sua simplicidade elegante e funcionalidade robusta. Assim como um detetive coleta pistas para resolver mistérios, o MySQL organiza, interroga e revela informações ocultas em conjuntos de dados desordenados. Desenvolvido em 1995 por Michael Widenius, David Axmark e Allan Larsson, ele se tornou a espinha dorsal de aplicações web e corporativas, sendo usado por gigantes como Facebook e Netflix.
 
 Assim como qualquer mistério, o MySQL apresenta componentes essenciais que tornam sua investigação compreensível e útil. Tabelas são a base do banco de dados, onde os dados são organizados em linhas e colunas. Chaves primárias e estrangeiras conectam informações, revelando relações que, à primeira vista, poderiam passar despercebidas. Consultas, por sua vez, são os interrogatórios feitos ao banco, enquanto índices aceleram a recuperação das respostas. Transações garantem a consistência e integridade das operações, refletindo o mesmo rigor que aplico ao investigar os enigmas mais intricados.
@@ -129,50 +129,50 @@ Utilizado em servidores, supercomputadores e até mesmo em dispositivos pessoais
 
 INSERT INTO comentario (dataHora, corpo, fkPostagem, fkUsuario) VALUES
 ('2024-11-25 09:15:00', 'Excelente artigo! Nunca havia pensado em MySQL como uma ferramenta de investigação, mas agora tudo faz sentido. A analogia com Sherlock Holmes é muito interessante.', 1, 1),
-('2024-11-26 10:10:00', 'Eu adoro MySQL, mas sempre fico perdido nas transações. A explicação sobre como elas garantem a integridade foi muito útil. Vou aplicar isso em meu projeto!', 1, 2),
-('2024-11-27 11:05:00', 'A comparação com a lógica dedutiva foi brilhante! Realmente, o MySQL permite que a gente busque respostas precisas, assim como Holmes.', 1, 3),
-('2024-11-28 12:20:00', 'Fico sempre impressionado com a flexibilidade do MySQL. Apesar de ser uma ferramenta tão simples, pode ser muito poderosa dependendo da aplicação.', 1, 4),
-('2024-11-29 13:30:00', 'Minha dúvida sobre o MySQL é sobre o uso de índices. Quando vale a pena criar um índice extra? Será que isso não compromete a performance?', 1, 5),
-('2024-11-25 09:40:00', 'Gostei muito dessa comparação entre HTTP e um detetive. A explicação sobre os métodos HTTP foi bem clara e facilitou meu entendimento.', 2, 1),
-('2024-11-26 10:55:00', 'O artigo trouxe uma visão interessante do HTTP. Acho que o HTTPS, com a criptografia, é fundamental para a segurança na web hoje em dia.', 2, 2),
-('2024-11-27 11:50:00', 'A explicação sobre como o HTTP funciona sem estado foi útil para mim. Isso realmente torna o processo de comunicação mais simples entre cliente e servidor.', 2, 3),
-('2024-11-28 12:40:00', 'Eu não sabia que o HTTP/2 já trazia melhorias tão grandes. Agora me sinto mais preparado para utilizar essas vantagens em meus projetos.', 2, 4),
-('2024-11-29 14:10:00', 'Agora entendi melhor como as requisições funcionam. Isso me ajudou muito em um projeto web no qual estou trabalhando. Muito bom o artigo!', 2, 5),
-('2024-11-25 08:50:00', 'A linguagem Java sempre foi minha favorita pela sua portabilidade. Concordo com o ponto sobre a JVM ser um dos maiores diferenciais do Java.', 3, 1),
-('2024-11-26 09:25:00', 'A capacidade de rodar em diferentes plataformas é o que mais me atrai no Java. Ótima explicação sobre como a JVM funciona por trás disso.', 3, 2),
-('2024-11-27 11:00:00', 'Sou iniciante em Java, e esse artigo me ajudou a entender melhor o conceito de orientação a objetos. Já estou começando a aplicar o que aprendi.', 3, 3),
-('2024-11-28 12:05:00', 'Java é uma excelente linguagem para desenvolvedores que querem criar aplicações robustas e escaláveis. Concordo totalmente com as vantagens citadas no artigo.', 3, 4),
-('2024-11-29 13:00:00', 'Estou começando a usar o Java em um novo projeto e a explicação sobre as bibliotecas e frameworks foi essencial para acelerar meu aprendizado.', 3, 5),
-('2024-11-25 08:30:00', 'Linux realmente oferece uma liberdade que outros sistemas operacionais não conseguem. Sou fã da personalização que ele permite.', 4, 1),
-('2024-11-26 09:50:00', 'O Linux tem uma curva de aprendizado, mas vale muito a pena. Com a ajuda da comunidade, qualquer problema é resolvido rapidamente.', 4, 2),
-('2024-11-27 11:10:00', 'Uso Linux há anos e não troco por nenhum outro sistema. Ele é mais seguro e eficiente, especialmente para servidores e desenvolvimento de software.', 4, 3),
-('2024-11-28 12:30:00', 'Adorei a explicação sobre a modularidade do Linux. Para quem está começando, uma distribuição como Ubuntu é perfeita!', 4, 4),
-('2024-11-29 13:40:00', 'O Linux é sem dúvida o melhor sistema operacional para quem deseja mais controle sobre o computador. A comunidade é muito ativa e sempre pronta para ajudar.', 4, 5);
+('2024-11-24 10:10:00', 'Eu adoro MySQL, mas sempre fico perdido nas transações. A explicação sobre como elas garantem a integridade foi muito útil. Vou aplicar isso em meu projeto!', 1, 2),
+('2024-11-23 11:05:00', 'A comparação com a lógica dedutiva foi brilhante! Realmente, o MySQL permite que a gente busque respostas precisas, assim como Holmes.', 1, 3),
+('2024-11-22 12:20:00', 'Fico sempre impressionado com a flexibilidade do MySQL. Apesar de ser uma ferramenta tão simples, pode ser muito poderosa dependendo da aplicação.', 1, 4),
+('2024-11-21 13:30:00', 'Minha dúvida sobre o MySQL é sobre o uso de índices. Quando vale a pena criar um índice extra? Será que isso não compromete a performance?', 1, 5),
+('2024-11-20 09:40:00', 'Gostei muito dessa comparação entre HTTP e um detetive. A explicação sobre os métodos HTTP foi bem clara e facilitou meu entendimento.', 2, 1),
+('2024-11-19 10:55:00', 'O artigo trouxe uma visão interessante do HTTP. Acho que o HTTPS, com a criptografia, é fundamental para a segurança na web hoje em dia.', 2, 2),
+('2024-11-18 11:50:00', 'A explicação sobre como o HTTP funciona sem estado foi útil para mim. Isso realmente torna o processo de comunicação mais simples entre cliente e servidor.', 2, 3),
+('2024-11-25 12:40:00', 'Eu não sabia que o HTTP/2 já trazia melhorias tão grandes. Agora me sinto mais preparado para utilizar essas vantagens em meus projetos.', 2, 4),
+('2024-11-24 14:10:00', 'Agora entendi melhor como as requisições funcionam. Isso me ajudou muito em um projeto web no qual estou trabalhando. Muito bom o artigo!', 2, 5),
+('2024-11-23 08:50:00', 'A linguagem Java sempre foi minha favorita pela sua portabilidade. Concordo com o ponto sobre a JVM ser um dos maiores diferenciais do Java.', 3, 1),
+('2024-11-22 09:25:00', 'A capacidade de rodar em diferentes plataformas é o que mais me atrai no Java. Ótima explicação sobre como a JVM funciona por trás disso.', 3, 2),
+('2024-11-21 11:00:00', 'Sou iniciante em Java, e esse artigo me ajudou a entender melhor o conceito de orientação a objetos. Já estou começando a aplicar o que aprendi.', 3, 3),
+('2024-11-20 12:05:00', 'Java é uma excelente linguagem para desenvolvedores que querem criar aplicações robustas e escaláveis. Concordo totalmente com as vantagens citadas no artigo.', 3, 4),
+('2024-11-19 13:00:00', 'Estou começando a usar o Java em um novo projeto e a explicação sobre as bibliotecas e frameworks foi essencial para acelerar meu aprendizado.', 3, 5),
+('2024-11-20 08:30:00', 'Linux realmente oferece uma liberdade que outros sistemas operacionais não conseguem. Sou fã da personalização que ele permite.', 4, 1),
+('2024-11-19 09:50:00', 'O Linux tem uma curva de aprendizado, mas vale muito a pena. Com a ajuda da comunidade, qualquer problema é resolvido rapidamente.', 4, 2),
+('2024-11-20 11:10:00', 'Uso Linux há anos e não troco por nenhum outro sistema. Ele é mais seguro e eficiente, especialmente para servidores e desenvolvimento de software.', 4, 3),
+('2024-11-21 12:30:00', 'Adorei a explicação sobre a modularidade do Linux. Para quem está começando, uma distribuição como Ubuntu é perfeita!', 4, 4),
+('2024-11-21 13:40:00', 'O Linux é sem dúvida o melhor sistema operacional para quem deseja mais controle sobre o computador. A comunidade é muito ativa e sempre pronta para ajudar.', 4, 5);
 
 
 
 
 INSERT INTO visualizacao (dataHora, fkUsuario, fkPostagem) VALUES
-('2024-11-25 09:00:00', 1, 1),
-('2024-11-26 09:55:00', 2, 1),
-('2024-11-27 10:50:00', 3, 1),
-('2024-11-28 12:00:00', 4, 1),
-('2024-11-29 13:00:00', 5, 1),
-('2024-11-25 09:30:00', 1, 2),
-('2024-11-26 10:40:00', 2, 2),
-('2024-11-27 11:45:00', 3, 2),
-('2024-11-28 12:30:00', 4, 2),
-('2024-11-29 14:00:00', 5, 2),
-('2024-11-25 08:40:00', 1, 3),
-('2024-11-26 09:15:00', 2, 3),
-('2024-11-27 10:30:00', 3, 3),
-('2024-11-28 11:50:00', 4, 3),
-('2024-11-29 12:30:00', 5, 3),
-('2024-11-25 08:00:00', 1, 4),
-('2024-11-26 09:10:00', 2, 4),
-('2024-11-27 10:25:00', 3, 4),
-('2024-11-28 12:00:00', 4, 4),
-('2024-11-29 13:20:00', 5, 4);
+('2024-11-21 09:00:00', 1, 1),
+('2024-11-20 09:55:00', 2, 1),
+('2024-11-20 10:50:00', 3, 1),
+('2024-11-19 12:00:00', 4, 1),
+('2024-11-20 13:00:00', 5, 1),
+('2024-11-19 09:30:00', 1, 2),
+('2024-11-24 10:40:00', 2, 2),
+('2024-11-23 11:45:00', 3, 2),
+('2024-11-22 12:30:00', 4, 2),
+('2024-11-21 14:00:00', 5, 2),
+('2024-11-20 08:40:00', 1, 3),
+('2024-11-21 09:15:00', 2, 3),
+('2024-11-22 10:30:00', 3, 3),
+('2024-11-21 11:50:00', 4, 3),
+('2024-11-20 12:30:00', 5, 3),
+('2024-11-19 08:00:00', 1, 4),
+('2024-11-18 09:10:00', 2, 4),
+('2024-11-17 10:25:00', 3, 4),
+('2024-11-23 12:00:00', 4, 4),
+('2024-11-22 13:20:00', 5, 4);
 
 INSERT INTO acesso (dataHora, fkUsuario) VALUES 
 (CURRENT_TIMESTAMP, 1),
