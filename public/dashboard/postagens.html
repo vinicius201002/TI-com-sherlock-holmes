@@ -76,9 +76,9 @@
                         // adicionar dados à tabela
                         for (var i = 0; i < dados.length; i++) {
                             corpo_tabela.innerHTML += `
-                            <td>${dados[i].id}</td>
+                            <td>${dados[i].postagemid}</td>
                             <td>${dados[i].titulo}</td>
-                            <td><i class="fa-solid fa-pencil" onclick=exibirTelaEdicao(${dados[i].id})></i></td>
+                            <td><i class="fa-solid fa-pencil" onclick=exibirTelaEdicao(${dados[i].postagemid})></i></td>
                             <td><i onclick=deletarPostagem(${dados[i].id}) class="fa-solid fa-trash"></i></td>
                             `;
                         }

@@ -58,22 +58,22 @@ function excluirUsuario(id) {
 }
 
 function listarUsuariosComMaisAcessos() {
-    var instrucaoSql = `SELECT Usuario.id, Usuario.nome, count(Acesso.id) as qtdAcesso FROM Usuario
-LEFT JOIN Acesso ON Usuario.id = Acesso.fkUsuario
-GROUP BY Usuario.id
-ORDER BY count(Acesso.id) DESC;`;
+    var instrucaoSql = `SELECT usuario.id, usuario.nome, count(Acesso.id) as qtdAcesso FROM usuario
+LEFT JOIN acesso ON usuario.id = acesso.fkUsuario
+GROUP BY usuario.id
+ORDER BY count(acesso.id) DESC;`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 function listarTotalUsuarios() {
-    var instrucaoSql = `SELECT count(id) as qtd_usuarios FROM Usuario;`
+    var instrucaoSql = `SELECT count(id) as qtd_usuarios FROM usuario;`
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 function listarTotalAcessos() {
-    var instrucaoSql = `SELECT count(id) as qtd_acessos FROM Acesso;`
+    var instrucaoSql = `SELECT count(id) as qtd_acessos FROM acesso;`
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -82,29 +82,29 @@ function listarUsuariosInativos(dtInicio, dtFim) {
     var instrucaoSql = "";
     if (dtInicio === "undefined" && dtFim === "undefined") { 
          instrucaoSql = `SELECT 
-        Usuario.id, 
-        Usuario.nome, 
-        MAX(Acesso.dataHora) AS 'ultimo_acesso'
+        usuario.id, 
+        usuario.nome, 
+        MAX(acesso.dataHora) AS 'ultimo_acesso'
     FROM 
-        Usuario
+        usuario
     LEFT JOIN 
-        Acesso ON Acesso.fkUsuario = Usuario.id
+        acesso ON acesso.fkUsuario = usuario.id
     GROUP BY 
-        Usuario.id
+        usuario.id
     ORDER BY 
         ultimo_acesso DESC;`
     } else {
         instrucaoSql = `SELECT 
-        Usuario.id, 
-        Usuario.nome, 
-        MAX(Acesso.dataHora) AS 'ultimo_acesso'
+        usuario.id, 
+        usuario.nome, 
+        MAX(acesso.dataHora) AS 'ultimo_acesso'
     FROM 
-        Usuario
+        usuario
     LEFT JOIN 
-        Acesso ON Acesso.fkUsuario = Usuario.id
-     WHERE Acesso.dataHora > '${dtInicio}' AND Acesso.dataHora < '${dtFim}'
+        acesso ON acesso.fkUsuario = usuario.id
+     WHERE acesso.dataHora > '${dtInicio}' AND acesso.dataHora < '${dtFim}'
     GROUP BY 
-        Usuario.id
+        usuario.id
     ORDER BY 
         ultimo_acesso DESC
        ;
@@ -125,7 +125,7 @@ SELECT
     END AS faixa_etaria,
     COUNT(*) AS quantidade
 FROM 
-    Usuario
+    usuario
 GROUP BY 
     faixa_etaria
 ORDER BY 
@@ -136,12 +136,12 @@ ORDER BY
 function listarAcessosPorDia(dtInicio, dtFim) {
     var instrucaoSql = "";
     if (dtInicio === "undefined" && dtFim === "undefined") { 
-         instrucaoSql = `select  DATE_FORMAT(dataHora, '%d/%m') AS dia, count(id) as quantidade from Acesso
-        GROUP BY  DATE_FORMAT(dataHora, '%d/%m');`;
+         instrucaoSql = `select  DATE_FORMAT(dataHora, '%d/%m') AS dia, count(id) as quantidade from acesso
+        GROUP BY  DATE_FORMAT(dataHora, '%d/%m') ORDER BY DATE_FORMAT(dataHora, '%d/%m');`;
       } else {
-        instrucaoSql = `select  DATE_FORMAT(dataHora, '%d/%m') AS dia, count(id) as quantidade from Acesso
+        instrucaoSql = `select  DATE_FORMAT(dataHora, '%d/%m') AS dia, count(id) as quantidade from acesso
         WHERE dataHora >= '${dtInicio}' AND dataHora <='${dtFim}'
-        GROUP BY  DATE_FORMAT(dataHora, '%d/%m');`;
+        GROUP BY  DATE_FORMAT(dataHora, '%d/%m') ORDER BY DATE_FORMAT(dataHora, '%d/%m');`;
       }
 
 
@@ -161,15 +161,15 @@ function listarUsuariosComMaisInteracoes(dtInicio, dtFim) {
         COUNT(DISTINCT v.id) AS quantidade_visualizacoes,
         (COUNT(DISTINCT a.id) + COUNT(DISTINCT c.id) + COUNT(DISTINCT cu.id) + COUNT(DISTINCT v.id)) AS total_interacoes
     FROM 
-        Usuario u
+        usuario u
     LEFT JOIN 
-        Acesso a ON a.fkUsuario = u.id
+        acesso a ON a.fkUsuario = u.id
     LEFT JOIN 
-        Comentario c ON c.fkUsuario = u.id
+        comentario c ON c.fkUsuario = u.id
     LEFT JOIN 
-        Curtida cu ON cu.fkUsuario = u.id
+        curtida cu ON cu.fkUsuario = u.id
     LEFT JOIN 
-        Visualizacao v ON v.fkUsuario = u.id
+        visualizacao v ON v.fkUsuario = u.id
     GROUP BY 
         u.id
     ORDER BY 
@@ -189,15 +189,15 @@ function listarUsuariosComMaisInteracoes(dtInicio, dtFim) {
         COUNT(DISTINCT v.id)
     ), 0) AS total_interacoes
 FROM 
-    Usuario u
+    usuario u
 LEFT JOIN 
-    Acesso a ON a.fkUsuario = u.id AND a.dataHora BETWEEN '${dtInicio}' AND '${dtFim}'
+    acesso a ON a.fkUsuario = u.id AND a.dataHora BETWEEN '${dtInicio}' AND '${dtFim}'
 LEFT JOIN 
-    Comentario c ON c.fkUsuario = u.id AND c.dataHora BETWEEN '${dtInicio}' AND '${dtFim}'
+    comentario c ON c.fkUsuario = u.id AND c.dataHora BETWEEN '${dtInicio}' AND '${dtFim}'
 LEFT JOIN 
-    Curtida cu ON cu.fkUsuario = u.id AND cu.dataHora BETWEEN '${dtInicio}' AND '${dtFim}'
+    curtida cu ON cu.fkUsuario = u.id AND cu.dataHora BETWEEN '${dtInicio}' AND '${dtFim}'
 LEFT JOIN 
-    Visualizacao v ON v.fkUsuario = u.id AND v.dataHora BETWEEN '${dtInicio}' AND '${dtFim}'
+    visualizacao v ON v.fkUsuario = u.id AND v.dataHora BETWEEN '${dtInicio}' AND '${dtFim}'
 GROUP BY 
     u.id
 ORDER BY 

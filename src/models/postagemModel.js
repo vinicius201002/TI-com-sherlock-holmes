@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function cadastrar(titulo, corpo, linkImagem, idUsuario) {
     var instrucaoSql = `
-        INSERT INTO Postagem (titulo, corpo, imagem, fkUsuario) VALUES ('${titulo}', '${corpo}', '${linkImagem}', ${idUsuario});
+        INSERT INTO postagem (titulo, corpo, imagem, fkUsuario) VALUES ('${titulo}', '${corpo}', '${linkImagem}', ${idUsuario});
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -10,21 +10,21 @@ function cadastrar(titulo, corpo, linkImagem, idUsuario) {
 
 function listarTodasPostagens() {
     var instrucaoSql = `
-    SELECT * FROM Postagem;
+    SELECT *, postagem.id as postagemid FROM postagem JOIN usuario on fkUsuario = usuario.id;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 function listarPostagensPorIdPostagem(id) {
-    var instrucaoSql = `SELECT * FROM Postagem JOIN usuario on fkUsuario = usuario.id WHERE Postagem.id = ${id};`;
+    var instrucaoSql = `SELECT * FROM postagem JOIN usuario on fkUsuario = usuario.id WHERE postagem.id = ${id};`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 function listarPostagensPorUsuario(fkUsuario) {
     var instrucaoSql = `
-    SELECT * FROM Postagem WHERE fkUsuario = ${fkUsuario};
+    SELECT * FROM postagem WHERE fkUsuario = ${fkUsuario};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -77,7 +77,7 @@ function listarPostagensMaisEngajada(idPostagem) {
 
 function listarComentarios(idPostagem) {
     var instrucaoSql = `
-    SELECT Comentario.*, Usuario.nome FROM Comentario JOIN Postagem ON Comentario.fkPostagem = Postagem.id JOIN Usuario ON Comentario.fkUsuario = Usuario.id WHERE fkPostagem = ${idPostagem} ORDER BY dataHora DESC;
+    SELECT comentario.*, usuario.nome FROM comentario JOIN postagem ON comentario.fkPostagem = postagem.id JOIN usuario ON comentario.fkUsuario = usuario.id WHERE fkPostagem = ${idPostagem} ORDER BY dataHora DESC;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -28,7 +28,7 @@ function listarPorData(idPostagem) {
 }
 
 function deletarCurtida(idPostagem, idUsuario) {
-    var instrucaoSql = `DELETE FROM Curtida WHERE fkPostagem = ${idPostagem} AND fkUsuario = ${idUsuario};`;
+    var instrucaoSql = `DELETE FROM curtida WHERE fkPostagem = ${idPostagem} AND fkUsuario = ${idUsuario};`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }

@@ -176,7 +176,7 @@
           resposta.json()
             .then((dados) => {
               var div_top_acessos = document.getElementById("usuarios-inativos");
-              var mensagem = "<h3>Usuários mais inativos</h3><ul>";
+              var mensagem = "<h3>Último acesso dos usuários</h3><ul>";
               for (var i = 0; i < dados.length; i++) {
                 mensagem += `<li><b>${i + 1}. ${dados[i].nome}</b> - Último acesso: ${formatarData(dados[i].ultimo_acesso)}</li>`;
               }

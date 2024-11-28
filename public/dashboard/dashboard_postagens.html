@@ -129,7 +129,7 @@
               var select_postagens = document.getElementById("slt_postagens");
 
               for (var i = 0; i < postagens.length; i++) {
-                select_postagens.innerHTML += `<option value=${postagens[i].id}>${postagens[i].titulo}</option>`;
+                select_postagens.innerHTML += `<option value=${postagens[i].postagemid}>${postagens[i].titulo}</option>`;
               }
             }))
             .catch((erro) => {
