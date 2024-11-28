@@ -107,13 +107,14 @@ a {
 }
 
 .box {
-    flex-basis: 25%;
+    flex-basis: 100%;
     background-color: #D9D9D9;
-    display: flex;
+    display: flex
+;
     flex-direction: column;
-    gap: 1rem;
+    gap: 4rem;
     padding: 10px;
-    justify-content: center;
+    /* justify-content: space-around; */
     align-items: center;
 }
 

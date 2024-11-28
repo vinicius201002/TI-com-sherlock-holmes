@@ -107,7 +107,7 @@ function renderizarPostagens(req, res) {
     } else {
         postagemModel.listarPostagensPorIdPostagem(id)
             .then(resposta => {
-                console.log(resposta)
+                //console.log(resposta)
                 if (resposta.length == 0) {
                     console.log("nenhum artigo encontrado")
                     res.status(404).render('404');
@@ -148,6 +148,16 @@ function listarComentarios(req, res) {
     })
 }
 
+function listarPostagensEVisualizacoes(req, res) {
+    postagemModel.listarPostagensEVisualizacoes()
+    .then(resposta => {
+        res.status(200).json(resposta)
+    })
+    .catch(erro => {
+        res.status(500).json(erro.sqlMessage)
+    })
+}
+
 module.exports = {
     cadastrar,
     listarTodasPostagens,
@@ -157,5 +167,6 @@ module.exports = {
     listarPostagensPorId,
     renderizarPostagens,
     listarPostagensMaisEngajada,
-    listarComentarios
+    listarComentarios,
+    listarPostagensEVisualizacoes
 }

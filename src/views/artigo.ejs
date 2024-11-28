@@ -39,19 +39,12 @@
             </div>
         </div>
         <div class="coluna2">
-            <div class="box">
-                <p>Conheça a história de Sherlock Holmes</p>
+            <div id="barralateral" class="box">
+                <p>Outros artigos</p>
                 <a href="#">Quem é Sherlock Holmes (999 acessos)</a>
                 <a href="#">As melhores histórias (1203 acessos)</a>
                 <a href="#">Conheça os personagens (1203 acessos)</a>
             </div>
-            <div class="box">
-                <p>Postagens oficiais</p>
-                <a href="#">Quem é Sherlock Holmes (999 acessos)</a>
-                <a href="#">As melhores histórias (1203 acessos)</a>
-                <a href="#">Conheça os personagens (1203 acessos)</a>
-            </div>
-            <div class="box"></div>
         </div>
     </div>
     <div class="curtidas">
@@ -131,6 +124,7 @@
 
     listarCurtida(idPostagem, idUsuario);
     listarNumeroCurtidas()
+    listarPostagensBarraLateral()
 
 
     function deslogar() {
@@ -303,6 +297,30 @@
         } else {
             alert("Preencha o campo para comentar.");
         }
+    }
+
+    function listarPostagensBarraLateral() {
+        fetch("/postagens/dashboard/visualizacoesPorPostagem", {
+            method: "GET"
+        })
+        .then(resposta => {
+            if (resposta.ok) {
+                resposta.json()
+                .then(postagens => {
+                    var mensagem = "<p>Outros artigos</p>";
+                    for (var i = 0; i < postagens.length; i++) {
+                        mensagem += `<a href='/postagens/${postagens[i].id}'>${postagens[i].titulo} (${postagens[i].qtdVisualizacoes} visualizações)</a>`;
+                    }
+                    barralateral.innerHTML = mensagem;
+                })
+                .catch(erro => {
+                    console.log(erro)
+                })
+            }
+        })
+        .catch(erro => {
+            console.log(erro);
+        })
     }
 
     function formatarData(dateTime) {

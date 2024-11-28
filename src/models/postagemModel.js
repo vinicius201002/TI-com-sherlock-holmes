@@ -83,6 +83,12 @@ function listarComentarios(idPostagem) {
     return database.executar(instrucaoSql);
 }
 
+function listarPostagensEVisualizacoes() {
+    var instrucaoSql = "SELECT postagem.id, titulo, count(visualizacao.id) as qtdVisualizacoes FROM postagem LEFT JOIN visualizacao ON visualizacao.fkPostagem = postagem.id group by postagem.id;";
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     cadastrar,
@@ -92,5 +98,6 @@ module.exports = {
     atualizar,
     listarPostagensPorIdPostagem,
     listarPostagensMaisEngajada,
-    listarComentarios
+    listarComentarios,
+    listarPostagensEVisualizacoes
 };

@@ -20,8 +20,8 @@ router.get("/listar/:id", function (req, res) {
 
 // Nova rota para renderizar o artigo usando EJS
 router.get("/:id", function (req, res) {
-    postagemController.renderizarPostagens(req, res, function (err, artigo) {
-        if (err) {
+    postagemController.renderizarPostagens(req, res, function (erro, artigo) {
+        if (erro) {
             return res.status(500).send('Erro ao buscar o artigo');
         }
         if (!artigo) {
@@ -46,6 +46,10 @@ router.get("/dashboard/postagensMaisEngajadas/:idPostagem", (req, res) => {
 
 router.get("/dashboard/ultimosComentarios/:idPostagem", (req, res) => {
     postagemController.listarComentarios(req, res);
+})
+
+router.get("/dashboard/visualizacoesPorPostagem", (req, res) => {
+    postagemController.listarPostagensEVisualizacoes(req, res)
 })
 
 module.exports = router;
